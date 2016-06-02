@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- the parent view - provides the gray listfragment background color -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center_vertical"
+    android:background="@android:color/white"
+    android:paddingTop="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
+
+    <!-- the innner view - provides the white rectangle -->
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/mint">
+
+        <!-- the container view for the title and description -->
+        <RelativeLayout android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="10dp">
+
+            <!-- the title view -->
+            <TextView
+                android:id="@+id/ranking_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textAppearance="@android:style/TextAppearance.Medium"
+                android:text="#"/>
+
+            <TextView
+                android:id="@+id/rankings_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/ranking_num"
+                android:layout_marginLeft="10dp"
+                android:textColor="@android:color/white"
+                android:textAppearance="@android:style/TextAppearance.Medium"
+                android:text="id"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/rankings_major"
+                android:textColor="@android:color/white"
+                android:text="전공: "/>
+
+            <ImageView
+                android:id="@+id/heart_white"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_width="25dp"
+                android:layout_height="25dp"/>
+
+            <!-- the description view -->
+            <TextView
+                android:id="@+id/rankings_major"
+                android:layout_below="@id/rankings_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textAppearance="@android:style/TextAppearance.Small"
+                android:text="major"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/rankings_wish_duty"
+                android:textColor="@android:color/white"
+                android:text="희망직무: "/>
+
+            <!-- the description view -->
+            <TextView android:id="@+id/rankings_wish_duty"
+                android:layout_below="@id/rankings_major"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textAppearance="@android:style/TextAppearance.Small"
+                android:text="wish duty"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/rankings_certificates"
+                android:textColor="@android:color/white"
+                android:text="자격증: "/>
+
+            <!-- the description view -->
+            <TextView android:id="@+id/rankings_certificates"
+                android:layout_below="@id/rankings_wish_duty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textAppearance="@android:style/TextAppearance.Small"
+                android:text="certificates"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/rankings_toeicScore"
+                android:textColor="@android:color/white"
+                android:text="토익: "/>
+
+            <!-- the description view -->
+            <TextView android:id="@+id/rankings_toeicScore"
+                android:layout_below="@id/rankings_certificates"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textAppearance="@android:style/TextAppearance.Small"
+                android:text="toeic score"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

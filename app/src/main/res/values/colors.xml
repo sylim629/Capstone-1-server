@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="mint">#80BFA2</color>
+    <color name="dark_mint">#6DAC9E</color>
+    <color name="accent">#E3D680</color>
+    <color name="nice_white">#ECF2DF</color>
+    <color name="light_gray">#999999</color>
+    <color name="frame">#b4b4b4</color>
+    <color name="frame_solid">#eee</color>
+    <color name="frame_background">#bcbcbc</color>
+</resources>

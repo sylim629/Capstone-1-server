@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="max_gpa">
+        <item>-선택-</item>
+        <item>4.0</item>
+        <item>4.5</item>
+    </string-array>
+    <string-array name="work_exp">
+        <item>-선택-</item>
+        <item>인턴</item>
+        <item>근무</item>
+        <item>없음</item>
+    </string-array>
+    <string-array name="majors">
+        <item>-선택-</item>
+        <item>컴퓨터공학</item>
+    </string-array>
+    <string-array name="company_types">
+        <item>-선택-</item>
+        <item>공기업</item>
+        <item>사기업</item>
+        <item>외국계기업</item>
+    </string-array>
+    <string-array name="company_duties">
+        <item>-선택-</item>
+        <item>웹기획∙웹마케팅∙PM</item>
+        <item>웹디자인</item>
+        <item>웹프로그래머</item>
+        <item>응용프로그래머</item>
+        <item>시스템프로그래머</item>
+        <item>ERP∙시스템분석∙설계</item>
+        <item>하드웨어∙소프트웨어</item>
+        <item>서버∙네트워크∙보안</item>
+        <item>데이터베이스 DBA</item>
+        <item>HTML∙웹표준UI개발</item>
+        <item>통신∙모바일</item>
+        <item>동영상 편집∙코덱</item>
+        <item>IT∙디자인∙컴퓨터교육</item>
+        <item>컨텐츠∙사이트운영</item>
+        <item>게임∙Game</item>
+        <item>웹마스터∙QA∙테스터</item>
+    </string-array>
+</resources>

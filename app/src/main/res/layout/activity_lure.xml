@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/popup_element"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20px"
+    android:orientation="vertical"
+    android:background="@color/mint">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="30dp"
+        android:layout_marginTop="100dp">
+
+        <TextView
+            android:id="@+id/popup_text_line1"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="본인의 TOEIC 점수를"
+            android:textSize="30dp"/>
+        <TextView
+            android:id="@+id/popup_text_line2"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="입력해보세요!"
+            android:textSize="30dp"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="30dp">
+            <EditText
+                android:id="@+id/lure_score"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="10dp"
+                android:background="@android:color/white"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:maxLength="3"
+                android:inputType="number"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="점"
+                android:textColor="@android:color/white"
+                android:textSize="30dp"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/result_button"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:drawablePadding="3sp"
+            android:layout_centerHorizontal="true"
+            android:text="결과보기"
+            android:textSize="30dp"
+            android:textColor="@color/mint"
+            android:background="@android:color/white"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="right">
+        <CheckBox
+            android:id="@+id/neverShow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="다시보지 않기"
+            android:textColor="@android:color/white"
+            android:buttonTint="@android:color/white"
+            android:textSize="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="bottom"
+            />
+        <Button
+            android:id="@+id/lure_close_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="닫기"
+            android:textColor="@color/mint"
+            android:background="@android:color/white"
+            android:textSize="20dp"
+            android:layout_gravity="bottom"
+            />
+    </LinearLayout>
+</LinearLayout>

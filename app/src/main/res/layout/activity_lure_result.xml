@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/popup_element"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/mint"
+    android:padding="20px"
+    android:orientation="vertical">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="30dp">
+
+        <TextView
+            android:id="@+id/result_text_line1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="당신의 전국"
+            android:textSize="30dp"
+            android:textColor="@android:color/white"/>
+
+        <TextView
+            android:id="@+id/result_text_line2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="퍼센티지 결과!"
+            android:textSize="30dp"
+            android:textColor="@android:color/white"
+            android:paddingBottom="20dp"/>
+
+        <TextView
+            android:id="@+id/result_text_toeic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="57dp"
+            android:textColor="@android:color/white"
+            android:paddingBottom="20dp"
+            android:text=""/>
+
+        <Button android:id="@+id/go_next_button"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:drawablePadding="3sp"
+            android:layout_centerHorizontal="true"
+            android:text="다음"
+            android:background="@android:color/white"
+            android:textColor="@color/mint"
+            android:textSize="30dp"/>
+    </LinearLayout>
+</LinearLayout>

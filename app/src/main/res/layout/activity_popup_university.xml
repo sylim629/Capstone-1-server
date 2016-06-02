@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <TextView
+        android:id="@+id/top_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/accent"
+        android:gravity="center"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:text="@string/find_university"
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/top_layout"
+        android:padding="20dp">
+
+        <Button
+            android:id="@+id/button_search_uni"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:clickable="true"
+            android:text="@string/search" />
+
+        <EditText
+            android:id="@+id/uni_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/button_search_uni"
+            android:layout_toStartOf="@+id/button_search_uni"
+            android:clickable="true"
+            android:inputType="text" />
+
+        <ListView
+            android:id="@+id/list_uni"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/uni_name" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button_choose_uni"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/accent"
+                android:clickable="true"
+                android:text="@string/ok"
+                android:textColor="@android:color/white" />
+
+            <LinearLayout
+                android:layout_width="2dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white" />
+
+            <Button
+                android:id="@+id/button_cancel_uni"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/accent"
+                android:clickable="true"
+                android:text="@string/cancel"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

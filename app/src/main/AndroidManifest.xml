@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.leanne.capstonedesign_1_">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <activity android:name=".SplashActivity"
+            android:theme="@android:style/Theme.NoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".HomeActivity" />
+        <activity android:name=".FindPasswordActivity" />
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".ExtraInfoActivity" />
+        <activity android:name=".LureActivity" />
+        <activity android:name=".LureResultActivity" />
+        <activity android:name=".LureResult2Activity" />
+        <activity android:name=".EditMyInfoActivity" />
+        <activity android:name=".EditRankingsActivity" />
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".SearchActivity" />
+        <activity android:name=".SearchResultActivity" />
+        <activity android:name=".AcceptRateActivity" />
+        <activity android:name=".RecommendActivity" />
+    </application>
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <permission  android:name="android.permission.INTERNET"></permission>
+
+</manifest>
