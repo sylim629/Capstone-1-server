@@ -133,6 +133,7 @@ public class TabFragment_Home extends ListFragment{
                 result += (tokens[j] + " ");
             }
         }
+        result = result + "개월";
         return result;
     }
 
