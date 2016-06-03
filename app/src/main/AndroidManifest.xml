@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.leanne.capstonedesign_1_">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".SplashActivity"
+        <activity
+            android:name=".SplashActivity"
             android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,8 +38,5 @@
         <activity android:name=".AcceptRateActivity" />
         <activity android:name=".RecommendActivity" />
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <permission  android:name="android.permission.INTERNET"></permission>
 
 </manifest>

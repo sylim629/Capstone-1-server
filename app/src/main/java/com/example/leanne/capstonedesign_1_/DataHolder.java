@@ -2,6 +2,7 @@ package com.example.leanne.capstonedesign_1_;
 
 /**
  * Created by Chloe on 4/10/2016.
+ * 그저 그냥 데이터 홀더.
  */
 public class DataHolder {
 

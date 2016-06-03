@@ -4,10 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 /**
  * Created by Chloe on 5/10/2016.
+ * 합격률 보여주는 페이지
  */
 public class AcceptRateActivity extends Activity {
     @Override

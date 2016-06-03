@@ -59,10 +59,12 @@ public class ExtraInfoActivity extends AppCompatActivity
     Spinner spinnerWorkExp;
 
     private PopupWindow popupCompany;
+    ArrayList<String> arrayListCompanies;
     TextView tvSelectedComp;
     TextView tvSelectedCompExp;
     String selectedCompany;
     private PopupWindow popupWindowUni;
+    ArrayList<String> arrayListUni;
     TextView textViewUniSearch;
     String selectedUni;
     private PopupWindow popupWindowCert;
@@ -115,51 +117,31 @@ public class ExtraInfoActivity extends AppCompatActivity
         selectedCertList = new ArrayList<>();
         newCertTextViews = new ArrayList<>();
 
-        // 자격증 DB의 자격증들을 arrayListCerts에 불러온다!!!!
-        // temp
-/*        RequestMsgSender idExistCheckMsgSender = (RequestMsgSender) new RequestMsgSender().execute("12;"++";");
-        String certifiSearchResult = null;
-
-        try {
-            IDexistCheck = Boolean.parseBoolean(idExistCheckMsgSender.get());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-*/
-        arrayListCerts.add("정보처리기사");
-        arrayListCerts.add("정보보안기사");
-        arrayListCerts.add("정보보안산업기사");
-        arrayListCerts.add("정보시스템감사사");
-        arrayListCerts.add("정보처리산업기사");
-        // end of temp
-
-        Spinner spinnerMajor = (Spinner) findViewById(R.id.spinner_major);
+        spinnerMajor = (Spinner) findViewById(R.id.spinner_major);
         ArrayAdapter adapterMajor = ArrayAdapter.createFromResource(this, R.array.majors,
                 android.R.layout.simple_spinner_item);
         adapterMajor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerMajor.setAdapter(adapterMajor);
 
-        Spinner spinnerGPA = (Spinner) findViewById(R.id.spinner_gpamax);
+        spinnerGPA = (Spinner) findViewById(R.id.spinner_gpamax);
         ArrayAdapter adapterGPA = ArrayAdapter.createFromResource(this, R.array.max_gpa,
                 android.R.layout.simple_spinner_item);
         adapterGPA.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerGPA.setAdapter(adapterGPA);
 
-        Spinner spinnerCompType = (Spinner) findViewById(R.id.spinner_company_type);
+        spinnerCompType = (Spinner) findViewById(R.id.spinner_company_type);
         ArrayAdapter adapterCompType = ArrayAdapter.createFromResource(this, R.array.company_types,
                 android.R.layout.simple_spinner_item);
         adapterCompType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCompType.setAdapter(adapterCompType);
 
-        Spinner spinnerCompDuty = (Spinner) findViewById(R.id.spinner_company_duty);
+        spinnerCompDuty = (Spinner) findViewById(R.id.spinner_company_duty);
         ArrayAdapter adapterCompDuty = ArrayAdapter.createFromResource(this, R.array.company_duties,
                 android.R.layout.simple_spinner_item);
         adapterCompDuty.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCompDuty.setAdapter(adapterCompDuty);
 
-        Spinner spinnerWorkExp = (Spinner) findViewById(R.id.spinner_workexp_type);
+        spinnerWorkExp = (Spinner) findViewById(R.id.spinner_workexp_type);
         ArrayAdapter adapterWorkExp = ArrayAdapter.createFromResource(this, R.array.work_exp,
                 android.R.layout.simple_spinner_item);
         adapterWorkExp.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -204,24 +186,15 @@ public class ExtraInfoActivity extends AppCompatActivity
         buttonSearchCert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // inputCert의 값과 유사한 결과를 arrayListCerts에서 찾아서 display!!!
-                RequestMsgSender certifiSearchInfoMsgSender = (RequestMsgSender) new RequestMsgSender().execute("12;"+inputCert+";");
-                String certifiSearchResult = null;
-
-                try {
-                    certifiSearchResult = certifiSearchInfoMsgSender.get();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
-                String[] tokens = certifiSearchResult.split(";");
-                for(int i = 0 ; i < tokens.length ; i++){
-                    if(tokens[i].equals("!")) tokens[i]="";
-                    arrayListCerts.add(tokens[i]);
-                }
-
-
+                arrayListCerts.clear();
+                // inputCert에 해당하는 자격증을 찾아서 arrayListCerts에 저장
+                // temp
+                arrayListCerts.add("정보처리기사");
+                arrayListCerts.add("정보보안기사");
+                arrayListCerts.add("정보보안산업기사");
+                arrayListCerts.add("정보시스템감사사");
+                arrayListCerts.add("정보처리산업기사");
+                // end of temp
             }
         });
         final ListView listCerts = (ListView) popupLayout.findViewById(R.id.list_cert);
@@ -316,7 +289,15 @@ public class ExtraInfoActivity extends AppCompatActivity
         buttonSearchCert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // inputCert의 값과 유사한 결과를 arrayListCerts에서 찾아서 display!!!
+                arrayListCerts.clear();
+                // inputCert에 해당하는 자격증을 찾아서 arrayListCerts에 저장
+                // temp
+                arrayListCerts.add("정보처리기사");
+                arrayListCerts.add("정보보안기사");
+                arrayListCerts.add("정보보안산업기사");
+                arrayListCerts.add("정보시스템감사사");
+                arrayListCerts.add("정보처리산업기사");
+                // end of temp
             }
         });
         final ListView listCerts = (ListView) popupLayout.findViewById(R.id.list_cert);
@@ -412,35 +393,19 @@ public class ExtraInfoActivity extends AppCompatActivity
         popupCompany.update();
 
         EditText editTextSearchComp = (EditText) viewCompany.findViewById(R.id.comp_name);
-        final String inputCompany = editTextSearchComp.getText().toString();
-        final ArrayList<String> arrayListCompanies = new ArrayList<>();
+        String inputCompany = editTextSearchComp.getText().toString();
+        arrayListCompanies = new ArrayList<>();
         Button buttonSearchComp = (Button) viewCompany.findViewById(R.id.button_search_comp);
         buttonSearchComp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                arrayListCompanies.clear();
 //                inputCompany 값을 대학디비에서 찾는다
 //                찾은 결과들은 arrayListCompanies에 저장
-                RequestMsgSender companySearchInfoMsgSender = (RequestMsgSender) new RequestMsgSender().execute("15;"+inputCompany+";");
-                String companySearchResult = null;
-
-                try {
-                    companySearchResult = companySearchInfoMsgSender.get();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
-                String[] tokens = companySearchResult.split(";");
-                for(int i = 0 ; i < tokens.length ; i++){
-                    if(tokens[i].equals("!")) tokens[i]="";
-                    arrayListCompanies.add(tokens[i]);
-                }
-
-
+                // 일단 테스트를 위해 Apple로 지정
+                arrayListCompanies.add("Apple");
             }
         });
-        // 일단 테스트를 위해 Apple로 지정
-        //arrayListCompanies.add("Apple");
         ListView listView = (ListView) viewCompany.findViewById(R.id.list_company);
         ArrayAdapter<String> adapterCompany = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_single_choice);
@@ -496,38 +461,20 @@ public class ExtraInfoActivity extends AppCompatActivity
                 popupWindowUni.setFocusable(true);
                 popupWindowUni.update();
 
-                final EditText editTextSearchUni = (EditText) layoutUni.findViewById(R.id.uni_name);
-                final String[] inputUni = {editTextSearchUni.getText().toString()};
-                final ArrayList<String> arrayListUni = new ArrayList<>();
+                EditText editTextSearchUni = (EditText) layoutUni.findViewById(R.id.uni_name);
+                String[] inputUni = {editTextSearchUni.getText().toString()};
+                arrayListUni = new ArrayList<>();
                 Button buttonSearchUni = (Button) layoutUni.findViewById(R.id.button_search_uni);
                 buttonSearchUni.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        inputUni[0] = editTextSearchUni.getText().toString();
-                        RequestMsgSender univSearchMsgSender = (RequestMsgSender) new RequestMsgSender().execute("11;"+ inputUni[0] +";");
-                        String univSearchResult = null;
-
-                        try {
-                            univSearchResult = univSearchMsgSender.get();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        } catch (ExecutionException e) {
-                            e.printStackTrace();
-                        }
-                        String[] tokens = univSearchResult.split(";");
-                        for(int i = 0 ; i < tokens.length ; i++){
-                            if(tokens[i].equals("!")) tokens[i]="";
-                            arrayListUni.add(tokens[i]);
-                        }
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                        ///////////////찾기 버튼 누르면 동작하도록....해야
+                        arrayListUni.clear();
                         // inputUni 값을 대학디비에서 찾는다
                         // 찾은 결과들은 arrayListUni에 저장
+                        // 일단 테스트를 위해 중앙대학교로 지정
+                        arrayListUni.add("중앙대학교");
                     }
                 });
-                // 일단 테스트를 위해 중앙대학교로 지정
-                arrayListUni.add("중앙대학교");
-
                 final ListView listViewUni = (ListView) layoutUni.findViewById(R.id.list_uni);
                 final ArrayAdapter<String> adapterUni = new ArrayAdapter<>(this,
                         android.R.layout.simple_list_item_single_choice);
@@ -623,19 +570,19 @@ public class ExtraInfoActivity extends AppCompatActivity
                 Calendar calendar = Calendar.getInstance();
                 int age = calendar.get(Calendar.YEAR) - year;
 
-                if (Objects.equals(textViewUniSearch.getText().toString(), "")
-                        || Objects.equals(spinnerMajor.getSelectedItem().toString(), "-선택-")
-                        || Objects.equals(inputGPA.getText().toString(), "")
-                        || Objects.equals(spinnerGPA.getSelectedItem().toString(), "-선택-")
-                        || Objects.equals(spinnerCompType.getSelectedItem().toString(), "-선택-")
-                        || Objects.equals(spinnerCompDuty.getSelectedItem().toString(), "-선택-")
-                        || Objects.equals(tvSelectedComp.getText().toString(), "")
-                        || (!isMaleClicked && !isFemaleClicked)
-                        || age == 0 || Objects.equals(spinnerWorkExp.getSelectedItem().toString(), "-선택-")
-                        || Objects.equals(tvSelectedCompExp.getText().toString(), "")) {
-                    Toast.makeText(this, "입력하지 않은 부분이 있습니다.", Toast.LENGTH_LONG).show();
-                    break;
-                }
+//                if (Objects.equals(textViewUniSearch.getText().toString(), "")
+//                        || Objects.equals(spinnerMajor.getSelectedItem().toString(), "-선택-")
+//                        || Objects.equals(inputGPA.getText().toString(), "")
+//                        || Objects.equals(spinnerGPA.getSelectedItem().toString(), "-선택-")
+//                        || Objects.equals(spinnerCompType.getSelectedItem().toString(), "-선택-")
+//                        || Objects.equals(spinnerCompDuty.getSelectedItem().toString(), "-선택-")
+//                        || Objects.equals(tvSelectedComp.getText().toString(), "")
+//                        || (!isMaleClicked && !isFemaleClicked)
+//                        || age == 0 || Objects.equals(spinnerWorkExp.getSelectedItem().toString(), "-선택-")
+//                        || Objects.equals(tvSelectedCompExp.getText().toString(), "")) {
+//                    Toast.makeText(this, "입력하지 않은 부분이 있습니다.", Toast.LENGTH_LONG).show();
+//                    break;
+//                }
 
                 LoggedInUser.getLoggedinUser().setAge(age);
                 Log.d("TAG", "" + LoggedInUser.getLoggedinUser().getAge());
@@ -683,8 +630,8 @@ public class ExtraInfoActivity extends AppCompatActivity
                 String careerToSend = "|";
                 if(!careerTemp.equals("")) {
                     String[] tokens =careerTemp.split("/", 0);
-                    for (int i = 0; i < tokens.length; i++) {
-                        careerToSend+=tokens[i]+":";    //Fav아이디들을 arrayList에 저장
+                    for (String token : tokens) {
+                        careerToSend += token + ":";    //Fav아이디들을 arrayList에 저장
                     }
                     careerToSend += "|";
                 }
@@ -700,9 +647,7 @@ public class ExtraInfoActivity extends AppCompatActivity
                  String updateResult = null;
                  try {
                       updateResult = updateMsgSender.get();
-                 } catch (InterruptedException e) {
-                      e.printStackTrace();
-                 } catch (ExecutionException e) {
+                 } catch (InterruptedException | ExecutionException e) {
                       e.printStackTrace();
                  }
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////

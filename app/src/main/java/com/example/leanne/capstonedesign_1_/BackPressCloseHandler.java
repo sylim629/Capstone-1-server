@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 /**
  * Created by imsuyeon on 16. 4. 2..
+ * 첫 페이지에서 뒤로 버튼을 두번눌러야 종료 가능
  */
 public class BackPressCloseHandler {
     private long backKeyPressedTime = 0;

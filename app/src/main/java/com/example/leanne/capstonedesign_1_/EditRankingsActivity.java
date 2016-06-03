@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
@@ -24,6 +23,7 @@ import java.util.Calendar;
 
 /**
  * Created by Chloe on 4/13/2016.
+ * 맞춤형 랭킹 기준 수정 페이지
  */
 public class EditRankingsActivity extends Activity implements View.OnClickListener {
     private Button editRankingsSave, buttonMale, buttonFemale, buttonCloseUniPopup;
