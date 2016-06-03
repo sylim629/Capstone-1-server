@@ -194,20 +194,35 @@ public class ExtraInfoActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 arrayListCerts.clear();
-	            adapterCert.clear();
+                adapterCert.clear();
                 // inputCert에 해당하는 자격증을 찾아서 arrayListCerts에 저장
                 // temp
+                Log.d("TAG","망할");
+                RequestMsgSender certifiSearchMsgSender = (RequestMsgSender) new RequestMsgSender().execute("12;"+inputCert+";");
+                String certifiSearchResult = null;
+
+                try {
+                    certifiSearchResult = certifiSearchMsgSender.get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+                String[] tokens = certifiSearchResult.split("\\|");
+                for( int i = 0 ; i < tokens.length ; i++){
+                    arrayListCerts.add(tokens[i]);
+                }
                 arrayListCerts.add("정보처리기사");
                 arrayListCerts.add("정보보안기사");
                 arrayListCerts.add("정보보안산업기사");
                 arrayListCerts.add("정보시스템감사사");
                 arrayListCerts.add("정보처리산업기사");
                 // end of temp
-	            for (int i = 0; i < arrayListCerts.size(); i++) {
-		            adapterCert.add(arrayListCerts.get(i));
-	            }
-	            adapterCert.notifyDataSetChanged();
-	            listCerts.invalidateViews();
+                for (int i = 0; i < arrayListCerts.size(); i++) {
+                    adapterCert.add(arrayListCerts.get(i));
+                }
+                adapterCert.notifyDataSetChanged();
+                listCerts.invalidateViews();
             }
         });
 //        selectedCertList = new ArrayList<>();
@@ -422,7 +437,7 @@ public class ExtraInfoActivity extends AppCompatActivity
 	    listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
 	    EditText editTextSearchComp = (EditText) viewCompany.findViewById(R.id.comp_name);
-        String inputCompany = editTextSearchComp.getText().toString();
+        final String inputCompany = editTextSearchComp.getText().toString();
         arrayListCompanies = new ArrayList<>();
         Button buttonSearchComp = (Button) viewCompany.findViewById(R.id.button_search_comp);
         buttonSearchComp.setOnClickListener(new View.OnClickListener() {
@@ -432,6 +447,17 @@ public class ExtraInfoActivity extends AppCompatActivity
 	            adapterCompany.clear();
 //                inputCompany 값을 대학디비에서 찾는다
 //                찾은 결과들은 arrayListCompanies에 저장
+                Log.d("TAG","망할");
+                RequestMsgSender comapanySearchMsgSender = (RequestMsgSender) new RequestMsgSender().execute("12;"+inputCompany+";");
+                String comapanySearchResult = null;
+
+                try {
+                    comapanySearchResult = comapanySearchMsgSender.get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
                 // 일단 테스트를 위해 Apple로 지정
                 arrayListCompanies.add("삼성SDI");
                 arrayListCompanies.add("삼성디스플레이");
@@ -444,6 +470,11 @@ public class ExtraInfoActivity extends AppCompatActivity
                 arrayListCompanies.add("삼성전기");
                 arrayListCompanies.add("삼성전자");
                 arrayListCompanies.add("삼성전자로지텍");
+                arrayListCompanies.add("Apple");
+                String[] tokens = comapanySearchResult.split("\\|");
+                for( int i = 0 ; i < tokens.length ; i++){
+                    arrayListCerts.add(tokens[i]);
+                }
 	            for (int i = 0; i < arrayListCompanies.size(); i++) {
 		            adapterCompany.add(arrayListCompanies.get(i));
 	            }
@@ -504,7 +535,7 @@ public class ExtraInfoActivity extends AppCompatActivity
 	            listViewUni.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
                 EditText editTextSearchUni = (EditText) layoutUni.findViewById(R.id.uni_name);
-                String[] inputUni = {editTextSearchUni.getText().toString()};
+                final String[] inputUni = {editTextSearchUni.getText().toString()};
                 arrayListUni = new ArrayList<>();
                 Button buttonSearchUni = (Button) layoutUni.findViewById(R.id.button_search_uni);
                 buttonSearchUni.setOnClickListener(new View.OnClickListener() {
@@ -512,11 +543,28 @@ public class ExtraInfoActivity extends AppCompatActivity
                     public void onClick(View v) {
                         arrayListUni.clear();
 	                    adapterUni.clear();
+
+                        Log.d("TAG","망할");
+                        RequestMsgSender uniSearchMsgSender = (RequestMsgSender) new RequestMsgSender().execute("12;"+inputUni+";");
+                        String uniSearchResult = null;
+
+                        try {
+                            uniSearchResult = uniSearchMsgSender.get();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        }
+
                         // inputUni 값을 대학디비에서 찾는다
                         // 찾은 결과들은 arrayListUni에 저장
                         // 일단 테스트를 위해 중앙대학교로 지정
                         arrayListUni.add("중앙대학교");
                         arrayListUni.add("중앙대학교 안성캠퍼스");
+                        String[] tokens = uniSearchResult.split("\\|");
+                        for( int i = 0 ; i < tokens.length ; i++){
+                            arrayListCerts.add(tokens[i]);
+                        }
 	                    for (int i = 0; i < arrayListUni.size(); i++) {
 		                    adapterUni.add(arrayListUni.get(i));
 	                    }
