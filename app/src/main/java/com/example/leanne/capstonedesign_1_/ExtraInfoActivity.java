@@ -180,6 +180,12 @@ public class ExtraInfoActivity extends AppCompatActivity
         popupWindowCert.setFocusable(true);
         popupWindowCert.update();
 
+	    final ListView listCerts = (ListView) popupLayout.findViewById(R.id.list_cert);
+	    final ArrayAdapter<String> adapterCert = new ArrayAdapter<>(this,
+			    android.R.layout.simple_list_item_single_choice);
+	    listCerts.setAdapter(adapterCert);
+	    listCerts.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
         EditText editTextSearchCert = (EditText) popupLayout.findViewById(R.id.cert_name);
         final String inputCert = editTextSearchCert.getText().toString();
         Button buttonSearchCert = (Button) popupLayout.findViewById(R.id.button_search_cert);
@@ -195,17 +201,13 @@ public class ExtraInfoActivity extends AppCompatActivity
                 arrayListCerts.add("정보시스템감사사");
                 arrayListCerts.add("정보처리산업기사");
                 // end of temp
+	            for (int i = 0; i < arrayListCerts.size(); i++) {
+		            adapterCert.add(arrayListCerts.get(i));
+	            }
+	            adapterCert.notifyDataSetChanged();
+	            listCerts.invalidateViews();
             }
         });
-        final ListView listCerts = (ListView) popupLayout.findViewById(R.id.list_cert);
-        final ArrayAdapter<String> adapterCert = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_single_choice);
-        listCerts.setAdapter(adapterCert);
-        for (int i = 0; i < arrayListCerts.size(); i++) {
-            adapterCert.add(arrayListCerts.get(i));
-        }
-        listCerts.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-
 //        selectedCertList = new ArrayList<>();
         selectedCertList.add("");
         listCerts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -284,6 +286,12 @@ public class ExtraInfoActivity extends AppCompatActivity
         popupWindowCert.setFocusable(true);
         popupWindowCert.update();
 
+	    final ListView listCerts = (ListView) popupLayout.findViewById(R.id.list_cert);
+	    final ArrayAdapter<String> adapterCert = new ArrayAdapter<>(this,
+			    android.R.layout.simple_list_item_single_choice);
+	    listCerts.setAdapter(adapterCert);
+	    listCerts.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
         //String inputCert = editTextSearchCert.getText().toString();
         Button buttonSearchCert = (Button) popupLayout.findViewById(R.id.button_search_cert);
         buttonSearchCert.setOnClickListener(new View.OnClickListener() {
@@ -298,17 +306,13 @@ public class ExtraInfoActivity extends AppCompatActivity
                 arrayListCerts.add("정보시스템감사사");
                 arrayListCerts.add("정보처리산업기사");
                 // end of temp
+	            for (int i = 0; i < arrayListCerts.size(); i++) {
+		            adapterCert.add(arrayListCerts.get(i));
+	            }
+	            adapterCert.notifyDataSetChanged();
+	            listCerts.invalidateViews();
             }
         });
-        final ListView listCerts = (ListView) popupLayout.findViewById(R.id.list_cert);
-        final ArrayAdapter<String> adapterCert = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_single_choice);
-        listCerts.setAdapter(adapterCert);
-        for (int i = 0; i < arrayListCerts.size(); i++) {
-            adapterCert.add(arrayListCerts.get(i));
-        }
-        listCerts.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-
         selectedCertList.add("");
         isAlreadyExists = false;
         listCerts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -392,7 +396,13 @@ public class ExtraInfoActivity extends AppCompatActivity
         popupCompany.setFocusable(true);
         popupCompany.update();
 
-        EditText editTextSearchComp = (EditText) viewCompany.findViewById(R.id.comp_name);
+	    final ListView listView = (ListView) viewCompany.findViewById(R.id.list_company);
+	    final ArrayAdapter<String> adapterCompany = new ArrayAdapter<>(this,
+			    android.R.layout.simple_list_item_single_choice);
+	    listView.setAdapter(adapterCompany);
+	    listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
+	    EditText editTextSearchComp = (EditText) viewCompany.findViewById(R.id.comp_name);
         String inputCompany = editTextSearchComp.getText().toString();
         arrayListCompanies = new ArrayList<>();
         Button buttonSearchComp = (Button) viewCompany.findViewById(R.id.button_search_comp);
@@ -404,17 +414,13 @@ public class ExtraInfoActivity extends AppCompatActivity
 //                찾은 결과들은 arrayListCompanies에 저장
                 // 일단 테스트를 위해 Apple로 지정
                 arrayListCompanies.add("Apple");
+	            for (int i = 0; i < arrayListCompanies.size(); i++) {
+		            adapterCompany.add(arrayListCompanies.get(i));
+	            }
+	            adapterCompany.notifyDataSetChanged();
+	            listView.invalidateViews();
             }
         });
-        ListView listView = (ListView) viewCompany.findViewById(R.id.list_company);
-        ArrayAdapter<String> adapterCompany = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_single_choice);
-        listView.setAdapter(adapterCompany);
-        for (int i = 0; i < arrayListCompanies.size(); i++) {
-            adapterCompany.add(arrayListCompanies.get(i));
-        }
-        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -461,6 +467,12 @@ public class ExtraInfoActivity extends AppCompatActivity
                 popupWindowUni.setFocusable(true);
                 popupWindowUni.update();
 
+	            final ListView listViewUni = (ListView) layoutUni.findViewById(R.id.list_uni);
+	            final ArrayAdapter<String> adapterUni = new ArrayAdapter<>(this,
+			            android.R.layout.simple_list_item_single_choice);
+	            listViewUni.setAdapter(adapterUni);
+	            listViewUni.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
                 EditText editTextSearchUni = (EditText) layoutUni.findViewById(R.id.uni_name);
                 String[] inputUni = {editTextSearchUni.getText().toString()};
                 arrayListUni = new ArrayList<>();
@@ -473,16 +485,13 @@ public class ExtraInfoActivity extends AppCompatActivity
                         // 찾은 결과들은 arrayListUni에 저장
                         // 일단 테스트를 위해 중앙대학교로 지정
                         arrayListUni.add("중앙대학교");
+	                    for (int i = 0; i < arrayListUni.size(); i++) {
+		                    adapterUni.add(arrayListUni.get(i));
+	                    }
+	                    adapterUni.notifyDataSetChanged();
+	                    listViewUni.invalidateViews();
                     }
                 });
-                final ListView listViewUni = (ListView) layoutUni.findViewById(R.id.list_uni);
-                final ArrayAdapter<String> adapterUni = new ArrayAdapter<>(this,
-                        android.R.layout.simple_list_item_single_choice);
-                listViewUni.setAdapter(adapterUni);
-                for (int i = 0; i < arrayListUni.size(); i++) {
-                    adapterUni.add(arrayListUni.get(i));
-                }
-                listViewUni.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
                 listViewUni.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
