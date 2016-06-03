@@ -635,14 +635,20 @@ public class ExtraInfoActivity extends AppCompatActivity
                     }
                     careerToSend += "|";
                 }
+
+	            String userInfoUpdateMsg = "4;" + LoggedInUser.getLoggedinUser().getUniv() + ";" + LoggedInUser.getLoggedinUser().getMajor()
+			            + ";" + LoggedInUser.getLoggedinUser().getCom_type() + ";" + LoggedInUser.getLoggedinUser().getDuty()
+			            + ";" + LoggedInUser.getLoggedinUser().getCom_name() + ";" + LoggedInUser.getLoggedinUser().getGender()
+			            + ";" + LoggedInUser.getLoggedinUser().getAge() + ";" + LoggedInUser.getLoggedinUser().getToeic()
+			            + ";" + LoggedInUser.getLoggedinUser().getCertifi() + ";" + LoggedInUser.getLoggedinUser().getGPA()
+			            + ";" + LoggedInUser.getLoggedinUser().getMaxGPA() + ";" + careerToSend + ";";
+	            userInfoUpdateMsg = userInfoUpdateMsg.replace(";null", ";!");
+	            while(userInfoUpdateMsg.contains(";;")){
+		            userInfoUpdateMsg = userInfoUpdateMsg.replace(";;", ";!;");
+	            }
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////
                  RequestMsgSender updateMsgSender = (RequestMsgSender) new RequestMsgSender()
-                      .execute("4;" + LoggedInUser.getLoggedinUser().getUniv() + ";" + LoggedInUser.getLoggedinUser().getMajor()
-                      + ";" + LoggedInUser.getLoggedinUser().getCom_type() + ";" + LoggedInUser.getLoggedinUser().getDuty()
-                      + ";" + LoggedInUser.getLoggedinUser().getCom_name() + ";" + LoggedInUser.getLoggedinUser().getGender()
-                      + ";" + LoggedInUser.getLoggedinUser().getAge() + ";" + LoggedInUser.getLoggedinUser().getToeic()
-                      + ";" + LoggedInUser.getLoggedinUser().getCertifi() + ";" + LoggedInUser.getLoggedinUser().getGPA()
-                      + ";" + LoggedInUser.getLoggedinUser().getMaxGPA() + ";" + careerToSend + ";");
+                      .execute(userInfoUpdateMsg);
                 //////////////////////////////////////////////////////////////////////////
                  String updateResult = null;
                  try {
