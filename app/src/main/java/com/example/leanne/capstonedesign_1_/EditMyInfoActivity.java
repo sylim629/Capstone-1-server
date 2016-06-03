@@ -12,6 +12,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -19,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -36,7 +38,7 @@ import java.util.Objects;
  * 개인정보 수정 탭 화면
  */
 public class EditMyInfoActivity extends AppCompatActivity
-        implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
+        implements View.OnClickListener {
     DisplayMetrics displaymetrics = new DisplayMetrics();
     int screenWidth, screenHeight;
     private Button buttonMale;
@@ -45,20 +47,26 @@ public class EditMyInfoActivity extends AppCompatActivity
 
     private int year, month, day;
     private TextView textViewBirthday;
-
+    private EditText editTextGPA;
+    private EditText editTextToeic;
+    private EditText tvCompExpMonths;
     private PopupWindow popupCompany;
-    TextView tvSelectedComp;
-    TextView tvSelectedCompExp;
-    String selectedCompany;
+    private TextView tvSelectedComp;
+    private TextView tvSelectedCompExp;
+    private String selectedCompany;
+    private TextView textViewAge;
     private PopupWindow popupWindowUni;
-    TextView textViewUniSearch;
-    String selectedUni;
+    private TextView textViewUniSearch;
+    private TextView textViewCompSearch;
+    private String selectedUni;
     private PopupWindow popupWindowCert;
-    TextView textViewAddCert;
-    ArrayList<String> arrayListCerts;
-    ArrayList<String> selectedCertList;
-    ArrayList<TextView> newCertTextViews;
+    private TextView textViewAddCert;
+    private ArrayList<String> arrayListCerts;
+    private ArrayList<String> selectedCertList;
+    private ArrayList<TextView> newCertTextViews;
     boolean isAlreadyExists;    // in selectedCertList
+    private Spinner spinnerMajor, spinnerGPA, spinnerCompType, spinnerCompDuty, spinnerWorkExp;
+    private String sendUniv, sendMajor, sendCompType, sendDuty, sendCompName, sendGender, sendAge, sendToeic, sendCert, sendGrade, sendGradeMax, typeCareer, typeCareerPlace, typeCareerDuration, sendCareer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -83,47 +91,52 @@ public class EditMyInfoActivity extends AppCompatActivity
         isMaleClicked = false;
         isFemaleClicked = false;
 
-        final Calendar c = Calendar.getInstance();
+  /*      final Calendar c = Calendar.getInstance();
         year = c.get(Calendar.YEAR);
         month = c.get(Calendar.MONTH);
-        day = c.get(Calendar.DAY_OF_MONTH);
+        day = c.get(Calendar.DAY_OF_MONTH);*/
 
         textViewBirthday = (TextView) findViewById(R.id.text_birthday);
-        textViewBirthday.setOnClickListener(this);
+        textViewAge = (TextView) findViewById(R.id.age_extra);
         tvSelectedComp = (TextView) findViewById(R.id.input_company);
         tvSelectedComp.setOnClickListener(this);
         textViewUniSearch = (TextView) findViewById(R.id.uni_extra_input);
         textViewUniSearch.setOnClickListener(this);
+        textViewCompSearch = (TextView) findViewById(R.id.text_company);
         tvSelectedCompExp = (TextView) findViewById(R.id.input_company_exp);
+        tvCompExpMonths = (EditText) findViewById(R.id.comp_exp_months);
         tvSelectedCompExp.setOnClickListener(this);
         textViewAddCert = (TextView) findViewById(R.id.certif_input);
         textViewAddCert.setOnClickListener(this);
+        editTextGPA = (EditText) findViewById(R.id.edit_text_gpa);
+        editTextToeic = (EditText) findViewById(R.id.editText_toeic);
 
-        Spinner spinnerMajor = (Spinner) findViewById(R.id.spinner_major);
+
+        spinnerMajor = (Spinner) findViewById(R.id.spinner_major);
         ArrayAdapter adapterMajor = ArrayAdapter.createFromResource(this, R.array.majors,
                 android.R.layout.simple_spinner_item);
         adapterMajor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerMajor.setAdapter(adapterMajor);
 
-        Spinner spinnerGPA = (Spinner) findViewById(R.id.spinner_gpamax);
+        spinnerGPA = (Spinner) findViewById(R.id.spinner_gpamax);
         ArrayAdapter adapterGPA = ArrayAdapter.createFromResource(this, R.array.max_gpa,
                 android.R.layout.simple_spinner_item);
         adapterGPA.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerGPA.setAdapter(adapterGPA);
 
-        Spinner spinnerCompType = (Spinner) findViewById(R.id.spinner_company_type);
+        spinnerCompType = (Spinner) findViewById(R.id.spinner_company_type);
         ArrayAdapter adapterCompType = ArrayAdapter.createFromResource(this, R.array.company_types,
                 android.R.layout.simple_spinner_item);
         adapterCompType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCompType.setAdapter(adapterCompType);
 
-        Spinner spinnerCompDuty = (Spinner) findViewById(R.id.spinner_company_duty);
+        spinnerCompDuty = (Spinner) findViewById(R.id.spinner_company_duty);
         ArrayAdapter adapterCompDuty = ArrayAdapter.createFromResource(this, R.array.company_duties,
                 android.R.layout.simple_spinner_item);
         adapterCompDuty.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCompDuty.setAdapter(adapterCompDuty);
 
-        Spinner spinnerWorkExp = (Spinner) findViewById(R.id.spinner_workexp_type);
+        spinnerWorkExp = (Spinner) findViewById(R.id.spinner_workexp_type);
         ArrayAdapter adapterWorkExp = ArrayAdapter.createFromResource(this, R.array.work_exp,
                 android.R.layout.simple_spinner_item);
         adapterWorkExp.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -132,34 +145,73 @@ public class EditMyInfoActivity extends AppCompatActivity
         //////////////////////////////////////////////////////////////////////////////////////////
         // INITIALIZE USER INFO
         //////////////////////////////////////////////////////////////////////////////////////////
+        String getStr;
         TextView userName = (TextView) findViewById(R.id.text_user_name);
         userName.setText(LoggedInUser.getLoggedinUser().getUserName());
         TextView userID = (TextView) findViewById(R.id.text_user_id);
         userID.setText(LoggedInUser.getLoggedinUser().getId());
-        textViewUniSearch.setText(LoggedInUser.getLoggedinUser().getUniv());
-        spinnerMajor.setPrompt(LoggedInUser.getLoggedinUser().getMajor());
-
-        updateDisplay();
-    }
-
-    // attach to an onclick handler to show the date picker
-    public void showDatePickerDialog() {
-        DatePickerFragment newFragment = new DatePickerFragment();
-        newFragment.show(getSupportFragmentManager(), "datePicker");
-    }
-
-    // handle the date selected
-    @Override
-    public void onDateSet(DatePicker view, int setYear, int setMonth, int setDay) {
-        year = setYear;
-        month = setMonth;
-        day = setDay;
-        updateDisplay();
-    }
-
-    private void updateDisplay() {
-        this.textViewBirthday.setText(
-                new StringBuilder().append(year).append(".").append(month + 1).append(".").append(day));
+        // set uni textview
+        getStr = LoggedInUser.getLoggedinUser().getUniv();
+        if(!getStr.equals(""))
+            textViewUniSearch.setText(LoggedInUser.getLoggedinUser().getUniv());
+        // set major spinner
+        getStr = LoggedInUser.getLoggedinUser().getMajor();
+        if(!getStr.equals(""))
+            spinnerMajor.setSelection(adapterMajor.getPosition(getStr));
+        // set gpa
+        getStr = LoggedInUser.getLoggedinUser().getGPA()+"";
+        if(!getStr.equals(""))
+            editTextGPA.setText(getStr);
+        // set max gpa
+        getStr = LoggedInUser.getLoggedinUser().getMaxGPA()+"";
+        if(!getStr.equals(""))
+            spinnerGPA.setSelection(adapterGPA.getPosition(getStr));
+        // set wish comp type
+        getStr = LoggedInUser.getLoggedinUser().getCom_type();
+        if(!getStr.equals(""))
+            spinnerCompType.setSelection(adapterCompType.getPosition(getStr));
+        // set wish duty
+        getStr = LoggedInUser.getLoggedinUser().getDuty();
+        if(!getStr.equals(""))
+            spinnerCompDuty.setSelection(adapterCompDuty.getPosition(getStr));
+        // set wish comp name
+        getStr = LoggedInUser.getLoggedinUser().getCom_name();
+        if(!getStr.equals(""))
+            tvSelectedComp.setText(getStr);
+        // set gender
+        getStr = LoggedInUser.getLoggedinUser().getGender()+"";
+        if(!getStr.equals("")){
+            if(getStr.equals("false")) { // 남자면
+                buttonMale.setBackgroundResource(R.drawable.button_border_after);
+                buttonMale.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.mint));
+            }else{  // 여자면
+                buttonFemale.setBackgroundResource(R.drawable.button_border_after);
+                buttonFemale.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.mint));
+            }
+        }
+        // set age
+        getStr = LoggedInUser.getLoggedinUser().getAge()+"";
+        if(!getStr.equals(""))
+            textViewBirthday.setText(getStr);
+        // set career
+        getStr = LoggedInUser.getLoggedinUser().getCareer();
+        if(!getStr.equals("")) {
+            getStr = getStr.substring(1, getStr.length()-1);
+            String[] tokens = getStr.split(":",0);
+            spinnerWorkExp.setSelection(adapterWorkExp.getPosition(tokens[0]));
+            tvSelectedCompExp.setText(tokens[1]);
+            tvCompExpMonths.setText(tokens[2]);
+        }
+        // set toeic
+        getStr = LoggedInUser.getLoggedinUser().getToeic()+"";
+        if(!getStr.equals("")) {
+            editTextToeic.setText(getStr);
+        }
+        // set certifications
+        getStr = LoggedInUser.getLoggedinUser().getCertifi();
+        if(!getStr.equals("")) {
+            textViewAddCert.setText(getStr);
+        }
     }
 
     private void addFirstCertificate() {
@@ -187,7 +239,7 @@ public class EditMyInfoActivity extends AppCompatActivity
         final ListView listCerts = (ListView) popupLayout.findViewById(R.id.list_cert);
         final ArrayAdapter<String> adapterCert = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_single_choice);
-        listCerts.setAdapter(adapterCert);
+        listCerts.setAdapter(adapterCert);                  ////////////////////////////////// ERROR ////////////////////////
         for (int i = 0; i < arrayListCerts.size(); i++) {
             adapterCert.add(arrayListCerts.get(i));
         }
@@ -511,10 +563,6 @@ public class EditMyInfoActivity extends AppCompatActivity
                     isMaleClicked = false;
                 }
                 break;
-            case R.id.text_birthday:
-//                showDialog(DATE_DIALOG_ID);
-                showDatePickerDialog();
-                break;
             case R.id.input_company_exp:
                 addCompany(false);
                 break;
@@ -522,14 +570,58 @@ public class EditMyInfoActivity extends AppCompatActivity
                 addFirstCertificate();
                 break;
             case R.id.button_my_info_save:
-                // save info on DB
-                // if DB save success
+                getValuesToSend();
+                saveToLoggedInUser();
+                // if DB save successful
                 Toast.makeText(this, "저장 완료", Toast.LENGTH_SHORT).show();
                 // if DB save failure
                 // Toast.makeText(this, "저장 실패", Toast.LENGTH_SHORT.show());
                 onBackPressed();
                 break;
         }
+    }
+
+    // get updated values from ui
+    public void getValuesToSend() {
+         sendUniv = textViewUniSearch.getText().toString();
+         sendMajor = spinnerMajor.getSelectedItem().toString();
+         sendCompType = spinnerCompType.getSelectedItem().toString();
+         sendDuty = spinnerCompDuty.getSelectedItem().toString();
+         sendCompName = tvSelectedComp.getText().toString();
+         sendGender="";
+        if(isMaleClicked == true)
+            sendGender = "false";
+        else
+            sendGender = "true";
+         sendAge = textViewAge.getText().toString();
+         sendToeic = editTextToeic.getText().toString();
+         sendCert = textViewAddCert.getText().toString();
+         sendGrade = editTextGPA.getText().toString();
+         sendGradeMax = spinnerGPA.getSelectedItem().toString();
+         typeCareer = spinnerCompType.getSelectedItem().toString();
+         typeCareerPlace = tvSelectedCompExp.getText().toString();
+         typeCareerDuration = tvCompExpMonths.getText().toString();
+         sendCareer = "|" + typeCareer + ":" + typeCareerPlace + ":" + typeCareerDuration + "|";
+         String requestMsg = "4;" + sendUniv + ";" + sendMajor + ";" + sendCompType + ";" + sendDuty + ";" +
+                 sendCompName + ";" + sendGender + ";" + sendAge + ";" + sendToeic + ";" + sendCert + ";" +
+                 sendGrade + ";" + sendGradeMax + ";" + sendCareer;
+        // send to server
+    }
+
+    // save updated info to save to logged in user
+    public void saveToLoggedInUser() {
+        LoggedInUser.getLoggedinUser().setUniv(sendUniv);
+        LoggedInUser.getLoggedinUser().setUniv(sendMajor);
+        LoggedInUser.getLoggedinUser().setUniv(sendCompType);
+        LoggedInUser.getLoggedinUser().setUniv(sendDuty);
+        LoggedInUser.getLoggedinUser().setUniv(sendCompName);
+        LoggedInUser.getLoggedinUser().setUniv(sendGender);
+        LoggedInUser.getLoggedinUser().setUniv(sendAge);
+        LoggedInUser.getLoggedinUser().setUniv(sendToeic);
+        LoggedInUser.getLoggedinUser().setUniv(sendCert);
+        LoggedInUser.getLoggedinUser().setUniv(sendGrade);
+        LoggedInUser.getLoggedinUser().setUniv(sendGradeMax);
+        LoggedInUser.getLoggedinUser().setUniv(sendCareer);
     }
 
     @Override
