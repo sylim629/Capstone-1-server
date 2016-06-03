@@ -274,7 +274,10 @@ public class LoggedInUser extends Application {
     public void setFav_ids(String input){
 
         if(!input.equals("")) {
-            fav_ids.add(input);   //Fav아이디들을 arrayList에 저장
+            String[] tokens = input.split("\\|");
+            for( int i = 0 ; i < tokens.length ; i++) {
+                fav_ids.add(tokens[i]);   //Fav아이디들을 arrayList에 저장
+            }
         }
     }
 

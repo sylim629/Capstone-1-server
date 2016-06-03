@@ -2,6 +2,7 @@ package com.example.leanne.capstonedesign_1_;
 
 import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -180,6 +181,12 @@ public class ExtraInfoActivity extends AppCompatActivity
         popupWindowCert.setFocusable(true);
         popupWindowCert.update();
 
+	    final ListView listCerts = (ListView) popupLayout.findViewById(R.id.list_cert);
+	    final ArrayAdapter<String> adapterCert = new ArrayAdapter<>(this,
+			    android.R.layout.simple_list_item_single_choice);
+	    listCerts.setAdapter(adapterCert);
+	    listCerts.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
         EditText editTextSearchCert = (EditText) popupLayout.findViewById(R.id.cert_name);
         final String inputCert = editTextSearchCert.getText().toString();
         Button buttonSearchCert = (Button) popupLayout.findViewById(R.id.button_search_cert);
@@ -187,25 +194,37 @@ public class ExtraInfoActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 arrayListCerts.clear();
+                adapterCert.clear();
                 // inputCert에 해당하는 자격증을 찾아서 arrayListCerts에 저장
                 // temp
+                Log.d("TAG","망할");
+                RequestMsgSender certifiSearchMsgSender = (RequestMsgSender) new RequestMsgSender().execute("12;"+inputCert+";");
+                String certifiSearchResult = null;
+
+                try {
+                    certifiSearchResult = certifiSearchMsgSender.get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+                String[] tokens = certifiSearchResult.split("\\|");
+                for( int i = 0 ; i < tokens.length ; i++){
+                    arrayListCerts.add(tokens[i]);
+                }
                 arrayListCerts.add("정보처리기사");
                 arrayListCerts.add("정보보안기사");
                 arrayListCerts.add("정보보안산업기사");
                 arrayListCerts.add("정보시스템감사사");
                 arrayListCerts.add("정보처리산업기사");
                 // end of temp
+                for (int i = 0; i < arrayListCerts.size(); i++) {
+                    adapterCert.add(arrayListCerts.get(i));
+                }
+                adapterCert.notifyDataSetChanged();
+                listCerts.invalidateViews();
             }
         });
-        final ListView listCerts = (ListView) popupLayout.findViewById(R.id.list_cert);
-        final ArrayAdapter<String> adapterCert = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_single_choice);
-        listCerts.setAdapter(adapterCert);
-        for (int i = 0; i < arrayListCerts.size(); i++) {
-            adapterCert.add(arrayListCerts.get(i));
-        }
-        listCerts.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-
 //        selectedCertList = new ArrayList<>();
         selectedCertList.add("");
         listCerts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -284,31 +303,50 @@ public class ExtraInfoActivity extends AppCompatActivity
         popupWindowCert.setFocusable(true);
         popupWindowCert.update();
 
-        //String inputCert = editTextSearchCert.getText().toString();
+	    final ListView listCerts = (ListView) popupLayout.findViewById(R.id.list_cert);
+	    final ArrayAdapter<String> adapterCert = new ArrayAdapter<>(this,
+			    android.R.layout.simple_list_item_single_choice);
+	    listCerts.setAdapter(adapterCert);
+	    listCerts.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
+        EditText editTextSearchCert = (EditText) popupLayout.findViewById(R.id.cert_name);
+        final String inputCert = editTextSearchCert.getText().toString();
         Button buttonSearchCert = (Button) popupLayout.findViewById(R.id.button_search_cert);
         buttonSearchCert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 arrayListCerts.clear();
+	            adapterCert.clear();
                 // inputCert에 해당하는 자격증을 찾아서 arrayListCerts에 저장
                 // temp
+                Log.d("TAG","망할");
+                RequestMsgSender certifiSearchMsgSender = (RequestMsgSender) new RequestMsgSender().execute("12;"+inputCert+";");
+                String certifiSearchResult = null;
+
+                try {
+                    certifiSearchResult = certifiSearchMsgSender.get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+                String[] tokens = certifiSearchResult.split("\\|");
+                for( int i = 0 ; i < tokens.length ; i++){
+                    arrayListCerts.add(tokens[i]);
+                }
                 arrayListCerts.add("정보처리기사");
                 arrayListCerts.add("정보보안기사");
                 arrayListCerts.add("정보보안산업기사");
                 arrayListCerts.add("정보시스템감사사");
                 arrayListCerts.add("정보처리산업기사");
                 // end of temp
+	            for (int i = 0; i < arrayListCerts.size(); i++) {
+		            adapterCert.add(arrayListCerts.get(i));
+	            }
+	            adapterCert.notifyDataSetChanged();
+	            listCerts.invalidateViews();
             }
         });
-        final ListView listCerts = (ListView) popupLayout.findViewById(R.id.list_cert);
-        final ArrayAdapter<String> adapterCert = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_single_choice);
-        listCerts.setAdapter(adapterCert);
-        for (int i = 0; i < arrayListCerts.size(); i++) {
-            adapterCert.add(arrayListCerts.get(i));
-        }
-        listCerts.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-
         selectedCertList.add("");
         isAlreadyExists = false;
         listCerts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -392,29 +430,47 @@ public class ExtraInfoActivity extends AppCompatActivity
         popupCompany.setFocusable(true);
         popupCompany.update();
 
-        EditText editTextSearchComp = (EditText) viewCompany.findViewById(R.id.comp_name);
-        String inputCompany = editTextSearchComp.getText().toString();
+	    final ListView listView = (ListView) viewCompany.findViewById(R.id.list_company);
+	    final ArrayAdapter<String> adapterCompany = new ArrayAdapter<>(this,
+			    android.R.layout.simple_list_item_single_choice);
+	    listView.setAdapter(adapterCompany);
+	    listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
+	    EditText editTextSearchComp = (EditText) viewCompany.findViewById(R.id.comp_name);
+        final String inputCompany = editTextSearchComp.getText().toString();
         arrayListCompanies = new ArrayList<>();
         Button buttonSearchComp = (Button) viewCompany.findViewById(R.id.button_search_comp);
         buttonSearchComp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 arrayListCompanies.clear();
+	            adapterCompany.clear();
 //                inputCompany 값을 대학디비에서 찾는다
 //                찾은 결과들은 arrayListCompanies에 저장
+                Log.d("TAG","망할");
+                RequestMsgSender comapanySearchMsgSender = (RequestMsgSender) new RequestMsgSender().execute("12;"+inputCompany+";");
+                String comapanySearchResult = null;
+
+                try {
+                    comapanySearchResult = comapanySearchMsgSender.get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
                 // 일단 테스트를 위해 Apple로 지정
                 arrayListCompanies.add("Apple");
+                String[] tokens = comapanySearchResult.split("\\|");
+                for( int i = 0 ; i < tokens.length ; i++){
+                    arrayListCerts.add(tokens[i]);
+                }
+	            for (int i = 0; i < arrayListCompanies.size(); i++) {
+		            adapterCompany.add(arrayListCompanies.get(i));
+	            }
+	            adapterCompany.notifyDataSetChanged();
+	            listView.invalidateViews();
             }
         });
-        ListView listView = (ListView) viewCompany.findViewById(R.id.list_company);
-        ArrayAdapter<String> adapterCompany = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_single_choice);
-        listView.setAdapter(adapterCompany);
-        for (int i = 0; i < arrayListCompanies.size(); i++) {
-            adapterCompany.add(arrayListCompanies.get(i));
-        }
-        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -461,28 +517,49 @@ public class ExtraInfoActivity extends AppCompatActivity
                 popupWindowUni.setFocusable(true);
                 popupWindowUni.update();
 
+	            final ListView listViewUni = (ListView) layoutUni.findViewById(R.id.list_uni);
+	            final ArrayAdapter<String> adapterUni = new ArrayAdapter<>(this,
+			            android.R.layout.simple_list_item_single_choice);
+	            listViewUni.setAdapter(adapterUni);
+	            listViewUni.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
                 EditText editTextSearchUni = (EditText) layoutUni.findViewById(R.id.uni_name);
-                String[] inputUni = {editTextSearchUni.getText().toString()};
+                final String[] inputUni = {editTextSearchUni.getText().toString()};
                 arrayListUni = new ArrayList<>();
                 Button buttonSearchUni = (Button) layoutUni.findViewById(R.id.button_search_uni);
                 buttonSearchUni.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         arrayListUni.clear();
+	                    adapterUni.clear();
+
+                        Log.d("TAG","망할");
+                        RequestMsgSender uniSearchMsgSender = (RequestMsgSender) new RequestMsgSender().execute("12;"+inputUni+";");
+                        String uniSearchResult = null;
+
+                        try {
+                            uniSearchResult = uniSearchMsgSender.get();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        }
+
                         // inputUni 값을 대학디비에서 찾는다
                         // 찾은 결과들은 arrayListUni에 저장
                         // 일단 테스트를 위해 중앙대학교로 지정
                         arrayListUni.add("중앙대학교");
+                        String[] tokens = uniSearchResult.split("\\|");
+                        for( int i = 0 ; i < tokens.length ; i++){
+                            arrayListCerts.add(tokens[i]);
+                        }
+	                    for (int i = 0; i < arrayListUni.size(); i++) {
+		                    adapterUni.add(arrayListUni.get(i));
+	                    }
+	                    adapterUni.notifyDataSetChanged();
+	                    listViewUni.invalidateViews();
                     }
                 });
-                final ListView listViewUni = (ListView) layoutUni.findViewById(R.id.list_uni);
-                final ArrayAdapter<String> adapterUni = new ArrayAdapter<>(this,
-                        android.R.layout.simple_list_item_single_choice);
-                listViewUni.setAdapter(adapterUni);
-                for (int i = 0; i < arrayListUni.size(); i++) {
-                    adapterUni.add(arrayListUni.get(i));
-                }
-                listViewUni.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
                 listViewUni.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -584,6 +661,13 @@ public class ExtraInfoActivity extends AppCompatActivity
 //                    break;
 //                }
 
+                if(!inputGPA.getText().toString().equals("")){
+                    if(!(Double.parseDouble(inputGPA.getText().toString())<=4.5&&Double.parseDouble(inputGPA.getText().toString())>=0)){
+                        Toast.makeText(this, "올바른 학점을 입력해주세요.", Toast.LENGTH_LONG).show();
+                        break;
+                    }
+                }
+
                 LoggedInUser.getLoggedinUser().setAge(age);
                 Log.d("TAG", "" + LoggedInUser.getLoggedinUser().getAge());
                 String certificates = "";
@@ -606,19 +690,24 @@ public class ExtraInfoActivity extends AppCompatActivity
                     gender = false;
                 LoggedInUser.getLoggedinUser().setGender(gender);
                 Log.d("TAG", "" + LoggedInUser.getLoggedinUser().getGender());
-                LoggedInUser.getLoggedinUser().setGPA(Double.parseDouble(inputGPA.getText().toString()));
-                Log.d("TAG", "" + LoggedInUser.getLoggedinUser().getGPA());
+                if(!inputGPA.getText().toString().equals("")){
+                    LoggedInUser.getLoggedinUser().setGPA(Double.parseDouble(inputGPA.getText().toString()));
+                    Log.d("TAG", "" + LoggedInUser.getLoggedinUser().getGPA());
+                }
                 LoggedInUser.getLoggedinUser().setMajor(spinnerMajor.getSelectedItem().toString());
                 Log.d("TAG", "" + LoggedInUser.getLoggedinUser().getMajor());
-                LoggedInUser.getLoggedinUser().setMaxGPA(Double.parseDouble(spinnerGPA.getSelectedItem().toString()));
-                Log.d("TAG", "" + LoggedInUser.getLoggedinUser().getMaxGPA());
+                if(!spinnerGPA.getSelectedItem().toString().equals("-선택-")){
+                    LoggedInUser.getLoggedinUser().setMaxGPA(Double.parseDouble(spinnerGPA.getSelectedItem().toString()));
+                    Log.d("TAG", "" + LoggedInUser.getLoggedinUser().getMaxGPA());
+                }
+
                 LoggedInUser.getLoggedinUser().setToeic(toeicScore);
                 Log.d("TAG", "" + LoggedInUser.getLoggedinUser().getToeic());
                 LoggedInUser.getLoggedinUser().setUniv(textViewUniSearch.getText().toString());
                 Log.d("TAG", "" + LoggedInUser.getLoggedinUser().getUniv());
                 String workExp = "";
-                if (Objects.equals(spinnerWorkExp.getSelectedItem().toString(), "없음"))
-                    LoggedInUser.getLoggedinUser().setCareer(null);
+                if (Objects.equals(spinnerWorkExp.getSelectedItem().toString(), "없음")||Objects.equals(spinnerWorkExp.getSelectedItem().toString(), "-선택-"))
+                    LoggedInUser.getLoggedinUser().setCareer("");
                 else {
                     workExp = workExp.concat(spinnerWorkExp.getSelectedItem().toString()).concat("/")
                             .concat(tvSelectedCompExp.getText().toString()).concat("/")
@@ -635,14 +724,21 @@ public class ExtraInfoActivity extends AppCompatActivity
                     }
                     careerToSend += "|";
                 }
+
+	            String userInfoUpdateMsg = "4;" + LoggedInUser.getLoggedinUser().getUniv() + ";" + LoggedInUser.getLoggedinUser().getMajor()
+			            + ";" + LoggedInUser.getLoggedinUser().getCom_type() + ";" + LoggedInUser.getLoggedinUser().getDuty()
+			            + ";" + LoggedInUser.getLoggedinUser().getCom_name() + ";" + LoggedInUser.getLoggedinUser().getGender()
+			            + ";" + LoggedInUser.getLoggedinUser().getAge() + ";" + LoggedInUser.getLoggedinUser().getToeic()
+			            + ";" + LoggedInUser.getLoggedinUser().getCertifi() + ";" + LoggedInUser.getLoggedinUser().getGPA()
+			            + ";" + LoggedInUser.getLoggedinUser().getMaxGPA() + ";" + careerToSend + ";";
+
+	            while(userInfoUpdateMsg.contains(";;")||userInfoUpdateMsg.contains(";null")){
+		            userInfoUpdateMsg = userInfoUpdateMsg.replace(";;", ";!;");
+                    userInfoUpdateMsg = userInfoUpdateMsg.replace(";null", ";!");
+	            }
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////
                  RequestMsgSender updateMsgSender = (RequestMsgSender) new RequestMsgSender()
-                      .execute("4;" + LoggedInUser.getLoggedinUser().getUniv() + ";" + LoggedInUser.getLoggedinUser().getMajor()
-                      + ";" + LoggedInUser.getLoggedinUser().getCom_type() + ";" + LoggedInUser.getLoggedinUser().getDuty()
-                      + ";" + LoggedInUser.getLoggedinUser().getCom_name() + ";" + LoggedInUser.getLoggedinUser().getGender()
-                      + ";" + LoggedInUser.getLoggedinUser().getAge() + ";" + LoggedInUser.getLoggedinUser().getToeic()
-                      + ";" + LoggedInUser.getLoggedinUser().getCertifi() + ";" + LoggedInUser.getLoggedinUser().getGPA()
-                      + ";" + LoggedInUser.getLoggedinUser().getMaxGPA() + ";" + careerToSend + ";");
+                      .execute(userInfoUpdateMsg);
                 //////////////////////////////////////////////////////////////////////////
                  String updateResult = null;
                  try {
