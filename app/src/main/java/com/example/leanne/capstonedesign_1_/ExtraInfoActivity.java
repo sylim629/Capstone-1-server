@@ -433,7 +433,17 @@ public class ExtraInfoActivity extends AppCompatActivity
 //                inputCompany 값을 대학디비에서 찾는다
 //                찾은 결과들은 arrayListCompanies에 저장
                 // 일단 테스트를 위해 Apple로 지정
-                arrayListCompanies.add("Apple");
+                arrayListCompanies.add("삼성SDI");
+                arrayListCompanies.add("삼성디스플레이");
+                arrayListCompanies.add("삼성메디슨");
+                arrayListCompanies.add("삼성물산");
+                arrayListCompanies.add("삼성생명보험");
+                arrayListCompanies.add("삼성에스디에스");
+                arrayListCompanies.add("삼성엔지리어링");
+                arrayListCompanies.add("삼성웰스토리");
+                arrayListCompanies.add("삼성전기");
+                arrayListCompanies.add("삼성전자");
+                arrayListCompanies.add("삼성전자로지텍");
 	            for (int i = 0; i < arrayListCompanies.size(); i++) {
 		            adapterCompany.add(arrayListCompanies.get(i));
 	            }
@@ -506,6 +516,7 @@ public class ExtraInfoActivity extends AppCompatActivity
                         // 찾은 결과들은 arrayListUni에 저장
                         // 일단 테스트를 위해 중앙대학교로 지정
                         arrayListUni.add("중앙대학교");
+                        arrayListUni.add("중앙대학교 안성캠퍼스");
 	                    for (int i = 0; i < arrayListUni.size(); i++) {
 		                    adapterUni.add(arrayListUni.get(i));
 	                    }
