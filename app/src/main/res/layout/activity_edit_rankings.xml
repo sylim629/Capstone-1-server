@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/mint"
-    android:focusableInTouchMode="true"
-    android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/mint"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/top"
@@ -22,7 +22,7 @@
             android:gravity="center"
             android:text="맞춤형 랭킹 기준 수정"
             android:textColor="@android:color/white"
-            android:textSize="25dp" />
+            android:textSize="25sp" />
     </LinearLayout>
 
     <RelativeLayout
@@ -43,7 +43,7 @@
             android:layout_toLeftOf="@+id/uni_extra_input"
             android:text="대학"
             android:textColor="@android:color/white"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/uni_extra_input"
@@ -57,7 +57,7 @@
             android:padding="10dp"
             android:singleLine="true"
             android:textColorHint="@color/light_gray"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/major_extra"
@@ -67,10 +67,10 @@
             android:layout_below="@id/uni_extra"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="10dp"
-            android:layout_toLeftOf="@+id/major_extra_input"
+            android:layout_toLeftOf="@+id/spinner_major"
             android:text="전공"
             android:textColor="@android:color/white"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
         <Spinner
             android:id="@+id/spinner_major"
@@ -91,10 +91,10 @@
             android:layout_below="@id/major_extra"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="10dp"
-            android:layout_toLeftOf="@+id/comp_type_extra_input"
+            android:layout_toLeftOf="@+id/spinner_company_type"
             android:text="회사종류"
             android:textColor="@android:color/white"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
         <Spinner
             android:id="@+id/spinner_company_type"
@@ -115,10 +115,10 @@
             android:layout_below="@id/comp_type_extra"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="10dp"
-            android:layout_toLeftOf="@+id/wishduty_extra_input"
+            android:layout_toLeftOf="@+id/spinner_company_duty"
             android:text="희망직무"
             android:textColor="@android:color/white"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
         <Spinner
             android:id="@+id/spinner_company_duty"
@@ -139,12 +139,11 @@
             android:layout_below="@id/text_duty"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="10dp"
-            android:layout_toLeftOf="@+id/input_company"
-            android:text="희망회사"
+            android:text="@string/company"
             android:textColor="@android:color/white"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
-        <EditText
+        <TextView
             android:id="@+id/input_company"
             android:layout_width="210dp"
             android:layout_height="wrap_content"
@@ -153,10 +152,11 @@
             android:layout_marginBottom="10dp"
             android:background="@android:color/white"
             android:clickable="true"
-            android:hint="희망회사 입력"
+            android:hint="@string/enter_company"
             android:padding="10dp"
             android:singleLine="true"
-            android:textColorHint="@color/light_gray" />
+            android:textColorHint="@color/light_gray"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/sex_extra"
@@ -169,7 +169,7 @@
             android:layout_toLeftOf="@+id/layout_gender"
             android:text="성별"
             android:textColor="@android:color/white"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
         <LinearLayout
             android:id="@+id/layout_gender"
@@ -211,10 +211,10 @@
             android:layout_below="@id/sex_extra"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="10dp"
-            android:layout_toLeftOf="@+id/age_extra_input"
+            android:layout_toLeftOf="@+id/text_birthday"
             android:text="생년월일"
             android:textColor="@android:color/white"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/text_birthday"
@@ -227,7 +227,7 @@
             android:clickable="true"
             android:padding="10dp"
             android:singleLine="true"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
     </RelativeLayout>
 
     <LinearLayout
@@ -244,7 +244,6 @@
             android:id="@+id/button_edit_rankings_save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:background="@android:color/white"
             android:text="저장"
             android:textColor="@color/mint" />
