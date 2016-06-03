@@ -42,11 +42,11 @@ public class TabFragment_Home extends ListFragment{
         mItems = new ArrayList<ListViewItem>();
         Resources resources = getResources();
 
-        RequestMsgSender userInfoMsgSender = (RequestMsgSender) new RequestMsgSender().execute("8;");
+        RequestMsgSender rankingInfoMsgSender = (RequestMsgSender) new RequestMsgSender().execute("8;");
         String rankingResult = null;
 
         try {
-            rankingResult = userInfoMsgSender.get();
+            rankingResult = rankingInfoMsgSender.get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {

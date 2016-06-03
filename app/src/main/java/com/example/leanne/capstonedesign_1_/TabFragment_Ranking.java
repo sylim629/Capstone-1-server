@@ -41,11 +41,11 @@ public class TabFragment_Ranking extends ListFragment {
         mItems = new ArrayList<ListViewItem>();
         Resources resources = getResources();
 
-        RequestMsgSender userInfoMsgSender = (RequestMsgSender) new RequestMsgSender().execute("9;");
-        String rankingResult = null;
+        RequestMsgSender custRankingMsgSender = (RequestMsgSender) new RequestMsgSender().execute("9;");
+        String custRankingResult = null;
 
         try {
-            rankingResult = userInfoMsgSender.get();
+            custRankingResult = custRankingMsgSender.get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -54,7 +54,7 @@ public class TabFragment_Ranking extends ListFragment {
         //rankingResult = "5;kwjel88;885;29;컴퓨터공학부;company_type1;웹기획∙웹마케팅∙PM;company_name1;gender1;univ1;정보처리기사;isEmp;3.9;4.5;|인턴:기관1:1개월|;iammeee;795;22;컴퓨터공학부;company_type2;통신∙모바일;company_name2;gender2;univ2;정보처리기사|정보보안기사;isEmp;3.5;4.5;|인턴:기관2:2개월|;qwerty101;835;27;컴퓨터공학부;company_type3;서버∙네트워크∙보안;company_name3;gender3;univ3;정보처리기사|정보보안기사;isEmp;3.85;4.5;|인턴:기관3:3개월|;gotrules;985;26;컴퓨터공학부;company_type4;시스템프로그래머;company_name4;gender4;univ4;정보처리기사;isEmp;3.25;4.0;|인턴:기관4:4개월|;id5;toeic5;age5;major5;company_type5;duty5;company_name5;gender5;univ5;certificate5;isEmp;4.23;4.5;|인턴:기관5:5개월|";
         //-----------------
         int topN=0;
-        String[] tokens = rankingResult.split(";");
+        String[] tokens = custRankingResult.split(";");
         for(int i = 0 ; i < tokens.length ; i++){
             if(tokens[i].equals("!")) tokens[i]="";
         }
