@@ -26,7 +26,8 @@ import java.util.logging.LoggingMXBean;
 public class ListViewDemoAdaptor extends ArrayAdapter<ListViewItem> {
 
     private LoggedInUser loggedInUser;
-    private String updateFavs;  // 서버로 보낼 찜 수정 스트링
+    private String updateFavs;
+    private String deleteFavs;
 
     public ListViewDemoAdaptor(Context context, List<ListViewItem> items) {
         super(context, R.layout.listview_item, items);
@@ -79,9 +80,10 @@ public class ListViewDemoAdaptor extends ArrayAdapter<ListViewItem> {
                     item.setIsFav(true);
                     LoggedInUser.getLoggedinUser().setFav_ids(item.getId().substring(5));   // 앞에 있는 "ID : " 빼고 나머지 아이디 부분만 저장
                     Toast.makeText(getContext(), "clicked white heart:" + item.getId() + "!", Toast.LENGTH_SHORT).show();
-                    updateFavs = "7;add;" + item.getId();
+                    String cutId = item.getId().substring(5);
+                    updateFavs = "7;add;" + cutId;
                     //-------------------------
-                    RequestMsgSender favsMsgSender = (RequestMsgSender) new RequestMsgSender().execute("7;add;" + item.getId());
+                    RequestMsgSender favsMsgSender = (RequestMsgSender) new RequestMsgSender().execute(updateFavs);
                     String favAddResult = null;
                     try {
                         favAddResult = favsMsgSender.get();
@@ -102,9 +104,10 @@ public class ListViewDemoAdaptor extends ArrayAdapter<ListViewItem> {
                     item.setIsFav(false);
                     LoggedInUser.getLoggedinUser().deleteFav_id(item.getId().substring(5));    // 앞에 있는 "ID : " 뺸 아이디 부분 찾아서 삭제
                     Toast.makeText(getContext(), "clicked red heart:" + item.getId() + "!", Toast.LENGTH_SHORT).show();
-                    updateFavs = "7;del;" + item.getId();
+                    String cutId = item.getId().substring(5);
+                    deleteFavs = "7;del;" + cutId;
                     //-------------------------
-                    RequestMsgSender favsMsgSender = (RequestMsgSender) new RequestMsgSender().execute("7;del;" + item.getId());
+                    RequestMsgSender favsMsgSender = (RequestMsgSender) new RequestMsgSender().execute(deleteFavs);
                     String favDelResult = null;
                     try {
                         favDelResult = favsMsgSender.get();
