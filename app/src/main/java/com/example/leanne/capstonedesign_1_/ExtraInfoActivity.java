@@ -2,6 +2,7 @@ package com.example.leanne.capstonedesign_1_;
 
 import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -293,7 +294,8 @@ public class ExtraInfoActivity extends AppCompatActivity
 	    listCerts.setAdapter(adapterCert);
 	    listCerts.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
-        //String inputCert = editTextSearchCert.getText().toString();
+        EditText editTextSearchCert = (EditText) popupLayout.findViewById(R.id.cert_name);
+        final String inputCert = editTextSearchCert.getText().toString();
         Button buttonSearchCert = (Button) popupLayout.findViewById(R.id.button_search_cert);
         buttonSearchCert.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -302,6 +304,21 @@ public class ExtraInfoActivity extends AppCompatActivity
 	            adapterCert.clear();
                 // inputCert에 해당하는 자격증을 찾아서 arrayListCerts에 저장
                 // temp
+                Log.d("TAG","망할");
+                RequestMsgSender certifiSearchMsgSender = (RequestMsgSender) new RequestMsgSender().execute("12;"+inputCert+";");
+                String certifiSearchResult = null;
+
+                try {
+                    certifiSearchResult = certifiSearchMsgSender.get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+                String[] tokens = certifiSearchResult.split("\\|");
+                for( int i = 0 ; i < tokens.length ; i++){
+                    arrayListCerts.add(tokens[i]);
+                }
                 arrayListCerts.add("정보처리기사");
                 arrayListCerts.add("정보보안기사");
                 arrayListCerts.add("정보보안산업기사");
@@ -597,6 +614,13 @@ public class ExtraInfoActivity extends AppCompatActivity
 //                    break;
 //                }
 
+                if(!inputGPA.getText().toString().equals("")){
+                    if(!(Double.parseDouble(inputGPA.getText().toString())<=4.5&&Double.parseDouble(inputGPA.getText().toString())>=0)){
+                        Toast.makeText(this, "올바른 학점을 입력해주세요.", Toast.LENGTH_LONG).show();
+                        break;
+                    }
+                }
+
                 LoggedInUser.getLoggedinUser().setAge(age);
                 Log.d("TAG", "" + LoggedInUser.getLoggedinUser().getAge());
                 String certificates = "";
@@ -619,19 +643,24 @@ public class ExtraInfoActivity extends AppCompatActivity
                     gender = false;
                 LoggedInUser.getLoggedinUser().setGender(gender);
                 Log.d("TAG", "" + LoggedInUser.getLoggedinUser().getGender());
-                LoggedInUser.getLoggedinUser().setGPA(Double.parseDouble(inputGPA.getText().toString()));
-                Log.d("TAG", "" + LoggedInUser.getLoggedinUser().getGPA());
+                if(!inputGPA.getText().toString().equals("")){
+                    LoggedInUser.getLoggedinUser().setGPA(Double.parseDouble(inputGPA.getText().toString()));
+                    Log.d("TAG", "" + LoggedInUser.getLoggedinUser().getGPA());
+                }
                 LoggedInUser.getLoggedinUser().setMajor(spinnerMajor.getSelectedItem().toString());
                 Log.d("TAG", "" + LoggedInUser.getLoggedinUser().getMajor());
-                LoggedInUser.getLoggedinUser().setMaxGPA(Double.parseDouble(spinnerGPA.getSelectedItem().toString()));
-                Log.d("TAG", "" + LoggedInUser.getLoggedinUser().getMaxGPA());
+                if(!spinnerGPA.getSelectedItem().toString().equals("-선택-")){
+                    LoggedInUser.getLoggedinUser().setMaxGPA(Double.parseDouble(spinnerGPA.getSelectedItem().toString()));
+                    Log.d("TAG", "" + LoggedInUser.getLoggedinUser().getMaxGPA());
+                }
+
                 LoggedInUser.getLoggedinUser().setToeic(toeicScore);
                 Log.d("TAG", "" + LoggedInUser.getLoggedinUser().getToeic());
                 LoggedInUser.getLoggedinUser().setUniv(textViewUniSearch.getText().toString());
                 Log.d("TAG", "" + LoggedInUser.getLoggedinUser().getUniv());
                 String workExp = "";
-                if (Objects.equals(spinnerWorkExp.getSelectedItem().toString(), "없음"))
-                    LoggedInUser.getLoggedinUser().setCareer(null);
+                if (Objects.equals(spinnerWorkExp.getSelectedItem().toString(), "없음")||Objects.equals(spinnerWorkExp.getSelectedItem().toString(), "-선택-"))
+                    LoggedInUser.getLoggedinUser().setCareer("");
                 else {
                     workExp = workExp.concat(spinnerWorkExp.getSelectedItem().toString()).concat("/")
                             .concat(tvSelectedCompExp.getText().toString()).concat("/")
@@ -655,9 +684,10 @@ public class ExtraInfoActivity extends AppCompatActivity
 			            + ";" + LoggedInUser.getLoggedinUser().getAge() + ";" + LoggedInUser.getLoggedinUser().getToeic()
 			            + ";" + LoggedInUser.getLoggedinUser().getCertifi() + ";" + LoggedInUser.getLoggedinUser().getGPA()
 			            + ";" + LoggedInUser.getLoggedinUser().getMaxGPA() + ";" + careerToSend + ";";
-	            userInfoUpdateMsg = userInfoUpdateMsg.replace(";null", ";!");
-	            while(userInfoUpdateMsg.contains(";;")){
+
+	            while(userInfoUpdateMsg.contains(";;")||userInfoUpdateMsg.contains(";null")){
 		            userInfoUpdateMsg = userInfoUpdateMsg.replace(";;", ";!;");
+                    userInfoUpdateMsg = userInfoUpdateMsg.replace(";null", ";!");
 	            }
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////
                  RequestMsgSender updateMsgSender = (RequestMsgSender) new RequestMsgSender()

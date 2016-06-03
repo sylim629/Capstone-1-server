@@ -76,8 +76,9 @@ public class TabFragment_Home extends ListFragment{
                 if (id.equals(idFavs.get(l))) {    // LoggedInUser의 Fav ID와 비교해서 일치하면 isFav = true. 아니면 false
                     isFavArray[k] = true;
                     break;
-                }else
+                }else{
                     isFavArray[k] = false;
+                }
             }
         }
 
