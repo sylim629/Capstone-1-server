@@ -7,7 +7,7 @@ package com.example.leanne.capstonedesign_1_;
 public class DataHolder {
 
     public DataHolder() {
-        skipLure = false;    // 매번 누르기 귀찮아서 일단 true로 해놓음. 나중에 꼭 false로 다시 바꾸기!
+        skipLure = true;    // 매번 누르기 귀찮아서 일단 true로 해놓음. 나중에 꼭 false로 다시 바꾸기!
     }
 
     private boolean skipLure;

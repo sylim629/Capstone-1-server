@@ -39,35 +39,34 @@ public class LoggedInUser extends Application {
     private ArrayList<String> fav_ids;      //일단 이 맴버변수는 필요하다!
 
     public LoggedInUser() {
-        id = null;
-        user_name = null;
-        passWd = null;
+        id = "";
+        user_name = "";
+        passWd = "";
         toeic = 0;
         age = 0;
-        major = null;
-        com_type = null;
-        duty = null;
-        com_name = null;
+        major = "";
+        com_type = "";
+        duty = "";
+        com_name = "";
         gender = false;
-        univ = null;
-        certifi = null;
+        univ = "";
+        certifi = "";
         gpa = 0.0;
         maxGPA = 4.5;
-        career = null;
+        career = "";
         isEmp = false;
         isMember = true;
 
-        search_major = null;
-        search_com_type = null;
-        search_duty = null;
-        search_com_name = null;
+        search_major = "";
+        search_com_type = "";
+        search_duty = "";
+        search_com_name = "";
         search_gender = false;
-        search_univ = null;
+        search_univ = "";
         search_age = 0;
 
         fav_ids = new ArrayList<>();      //일단 이 맴버변수는 필요하다!
-        fav_ids.add("iammeee");
-        fav_ids.add("gotrules");
+
     }
 
 
@@ -273,7 +272,10 @@ public class LoggedInUser extends Application {
     }*/
 
     public void setFav_ids(String input){
-        fav_ids.add(input);   //Fav아이디들을 arrayList에 저장
+
+        if(!input.equals("")) {
+            fav_ids.add(input);   //Fav아이디들을 arrayList에 저장
+        }
     }
 
     /* deletes id from FavId ArrayList */

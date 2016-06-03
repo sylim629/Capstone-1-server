@@ -3,6 +3,7 @@ package com.example.leanne.capstonedesign_1_;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,6 +27,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         setContentView(R.layout.activity_login);
 
         initView();
+        editTextID.setText("yddnsw");
+        editTextPW.setText("6nj1v0");
     }
 
     private void initView() {
@@ -93,14 +96,18 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                     LoggedInUser.getLoggedinUser().setGPA(Double.parseDouble(tokens[14]));
                     LoggedInUser.getLoggedinUser().setMaxGPA(Double.parseDouble(tokens[15]));
                     LoggedInUser.getLoggedinUser().setCareer(tokens[16]);
-                    LoggedInUser.getLoggedinUser().setSearch_major(tokens[14]);
-                    LoggedInUser.getLoggedinUser().setSearch_com_type(tokens[15]);
-                    LoggedInUser.getLoggedinUser().setSearch_duty(tokens[16]);
-                    LoggedInUser.getLoggedinUser().setSearch_com_name(tokens[17]);
-                    LoggedInUser.getLoggedinUser().setSearch_gender(Boolean.parseBoolean(tokens[18]));
-                    LoggedInUser.getLoggedinUser().setSearch_univ(tokens[19]);
-                    LoggedInUser.getLoggedinUser().setSearch_age(Integer.parseInt(tokens[20]));
-                    LoggedInUser.getLoggedinUser().setFav_ids(tokens[21]);
+                    LoggedInUser.getLoggedinUser().setSearch_major(tokens[17]);
+                    LoggedInUser.getLoggedinUser().setSearch_com_type(tokens[18]);
+                    LoggedInUser.getLoggedinUser().setSearch_duty(tokens[19]);
+                    LoggedInUser.getLoggedinUser().setSearch_com_name(tokens[20]);
+                    LoggedInUser.getLoggedinUser().setSearch_gender(Boolean.parseBoolean(tokens[21]));
+                    LoggedInUser.getLoggedinUser().setSearch_univ(tokens[22]);
+                    Log.d("check loggedInUser",""+LoggedInUser.getLoggedinUser().getSearch_Univ());
+
+                    LoggedInUser.getLoggedinUser().setSearch_age(Integer.parseInt(tokens[23]));
+                    Log.d("check loggedInUser",""+LoggedInUser.getLoggedinUser().getSearch_Age());
+
+                    LoggedInUser.getLoggedinUser().setFav_ids(tokens[24]);
 
                     Toast.makeText(this, "로그인 성공!", Toast.LENGTH_SHORT).show();
                     Intent intentHome = new Intent(this, HomeActivity.class);
