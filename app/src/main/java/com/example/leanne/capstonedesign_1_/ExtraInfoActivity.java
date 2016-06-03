@@ -193,6 +193,7 @@ public class ExtraInfoActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 arrayListCerts.clear();
+	            adapterCert.clear();
                 // inputCert에 해당하는 자격증을 찾아서 arrayListCerts에 저장
                 // temp
                 arrayListCerts.add("정보처리기사");
@@ -298,6 +299,7 @@ public class ExtraInfoActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 arrayListCerts.clear();
+	            adapterCert.clear();
                 // inputCert에 해당하는 자격증을 찾아서 arrayListCerts에 저장
                 // temp
                 arrayListCerts.add("정보처리기사");
@@ -410,6 +412,7 @@ public class ExtraInfoActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 arrayListCompanies.clear();
+	            adapterCompany.clear();
 //                inputCompany 값을 대학디비에서 찾는다
 //                찾은 결과들은 arrayListCompanies에 저장
                 // 일단 테스트를 위해 Apple로 지정
@@ -481,6 +484,7 @@ public class ExtraInfoActivity extends AppCompatActivity
                     @Override
                     public void onClick(View v) {
                         arrayListUni.clear();
+	                    adapterUni.clear();
                         // inputUni 값을 대학디비에서 찾는다
                         // 찾은 결과들은 arrayListUni에 저장
                         // 일단 테스트를 위해 중앙대학교로 지정
