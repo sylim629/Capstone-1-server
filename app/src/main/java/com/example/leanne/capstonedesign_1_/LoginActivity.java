@@ -59,19 +59,19 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                     Toast.makeText(this, "아이디 혹은 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
                     break;
                 }
-                RequestMsgSender loginMsgSender = (RequestMsgSender) new RequestMsgSender().execute("5;" + id + ";" + pw + ";");
+                RequestMsgSender loginMsgSender = (RequestMsgSender) new RequestMsgSender()
+		                .execute("5;" + id + ";" + pw + ";");
                 String loginResult = null;
 
                 try {
                     loginResult = loginMsgSender.get();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
+                } catch (InterruptedException | ExecutionException e) {
                     e.printStackTrace();
                 }
 
 
-                if (loginResult.equals("false")) {
+	            assert loginResult != null;
+	            if (loginResult.equals("false")) {
                     Toast.makeText(this, "아이디 혹은 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
                     editTextID.setText("");
                     editTextPW.setText("");
