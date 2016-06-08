@@ -3,7 +3,7 @@ package com.example.leanne.capstonedesign_1_;
 import android.app.Activity;
 import android.os.Bundle;
 
-/**
+/*
  * Created by imsuyeon on 16. 4. 4..
  */
 public class FindPasswordActivity extends Activity {

@@ -711,8 +711,7 @@ public class ExtraInfoActivity extends AppCompatActivity
 						+ ";" + LoggedInUser.getLoggedinUser().getCertifi() + ";" + LoggedInUser.getLoggedinUser().getGPA()
 						+ ";" + LoggedInUser.getLoggedinUser().getMaxGPA() + ";" + careerToSend + ";";
 
-				while (userInfoUpdateMsg.contains(";;") || userInfoUpdateMsg.contains(";null") || userInfoUpdateMsg.contains(";|;") || userInfoUpdateMsg.contains(";|인턴:|;")) {
-					userInfoUpdateMsg = userInfoUpdateMsg.replace(";|인턴:|;", ";!;");
+				while (userInfoUpdateMsg.contains(";;") || userInfoUpdateMsg.contains(";null") || userInfoUpdateMsg.contains(";|;")) {
 					userInfoUpdateMsg = userInfoUpdateMsg.replace(";|;", ";!;");
 					userInfoUpdateMsg = userInfoUpdateMsg.replace(";;", ";!;");
 					userInfoUpdateMsg = userInfoUpdateMsg.replace(";null", ";!");

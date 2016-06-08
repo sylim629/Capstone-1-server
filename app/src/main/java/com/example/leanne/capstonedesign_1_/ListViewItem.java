@@ -1,7 +1,5 @@
 package com.example.leanne.capstonedesign_1_;
 
-import java.util.ArrayList;
-
 /**
  * Created by Chloe on 4/13/2016.
  * 랭킹 화면에 나타나는 각 아이템에 출력될 내용물들 정의 클래스

@@ -6,24 +6,24 @@ package com.example.leanne.capstonedesign_1_;
  */
 public class DataHolder {
 
-    public DataHolder() {
-        skipLure = true;    // 매번 누르기 귀찮아서 일단 true로 해놓음. 나중에 꼭 false로 다시 바꾸기!
-    }
+	public DataHolder() {
+		skipLure = true;    // 매번 누르기 귀찮아서 일단 true로 해놓음. 나중에 꼭 false로 다시 바꾸기!
+	}
 
-    private boolean skipLure;
+	private boolean skipLure;
 
-    public void setSkipLure(boolean skipLure) {
-        this.skipLure = skipLure;
-    }
+	public void setSkipLure(boolean skipLure) {
+		this.skipLure = skipLure;
+	}
 
-    public boolean getSkipLure() {
-        return skipLure;
-    }
+	public boolean getSkipLure() {
+		return skipLure;
+	}
 
-    // ***
-    private static final DataHolder holder = new DataHolder();
+	// ***
+	private static final DataHolder holder = new DataHolder();
 
-    public static DataHolder getInstance() {
-        return holder;
-    }
+	public static DataHolder getInstance() {
+		return holder;
+	}
 }

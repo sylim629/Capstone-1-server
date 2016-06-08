@@ -23,7 +23,7 @@ public class SocketConnector implements Runnable {
 	private String replyMsg;
 
 	public SocketConnector() {
-		receiverPort = 7779;
+		receiverPort = 7775;
 		receiverHost = "192.168.0.8";
 	}
 

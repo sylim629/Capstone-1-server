@@ -11,28 +11,28 @@ import android.widget.Toast;
  */
 public class SearchResultActivity extends Activity implements View.OnClickListener {
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_result);
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_search_result);
 
-        initView();
-    }
+		initView();
+	}
 
-    private void initView() {
+	private void initView() {
 
-    }
+	}
 
-    @Override
-    public void onClick(View v) {
-        switch(v.getId()){
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
 
-        }
-    }
+		}
+	}
 
-    @Override
-    public void onBackPressed() {
-        this.finish();
-        overridePendingTransition(R.anim.animation_enter_left2right, R.anim.animation_leave_left2right);
-    }
+	@Override
+	public void onBackPressed() {
+		this.finish();
+		overridePendingTransition(R.anim.animation_enter_left2right, R.anim.animation_leave_left2right);
+	}
 }

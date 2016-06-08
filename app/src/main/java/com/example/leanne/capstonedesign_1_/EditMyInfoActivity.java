@@ -118,6 +118,7 @@ public class EditMyInfoActivity extends AppCompatActivity
 		textViewAddCert.setOnClickListener(this);
 
 		arrayListUni = new ArrayList<>();
+		arrayListCompanies = new ArrayList<>();
 		arrayListCerts = new ArrayList<>();
 		selectedCertList = new ArrayList<>();
 		newCertTextViews = new ArrayList<>();
@@ -155,12 +156,79 @@ public class EditMyInfoActivity extends AppCompatActivity
 		//////////////////////////////////////////////////////////////////////////////////////////
 		// INITIALIZE USER INFO
 		//////////////////////////////////////////////////////////////////////////////////////////
+//		TextView userName = (TextView) findViewById(R.id.text_user_name);
+//		userName.setText(LoggedInUser.getLoggedinUser().getUserName());
+//		TextView userID = (TextView) findViewById(R.id.text_user_id);
+//		userID.setText(LoggedInUser.getLoggedinUser().getId());
+//		textViewUniSearch.setText(LoggedInUser.getLoggedinUser().getUniv());
+//		spinnerMajor.setPrompt(LoggedInUser.getLoggedinUser().getMajor());
+		String getStr;
 		TextView userName = (TextView) findViewById(R.id.text_user_name);
 		userName.setText(LoggedInUser.getLoggedinUser().getUserName());
 		TextView userID = (TextView) findViewById(R.id.text_user_id);
 		userID.setText(LoggedInUser.getLoggedinUser().getId());
-		textViewUniSearch.setText(LoggedInUser.getLoggedinUser().getUniv());
-		spinnerMajor.setPrompt(LoggedInUser.getLoggedinUser().getMajor());
+		// set uni textview
+		getStr = LoggedInUser.getLoggedinUser().getUniv();
+		if (!getStr.equals(""))
+			textViewUniSearch.setText(LoggedInUser.getLoggedinUser().getUniv());
+		// set major spinner
+		getStr = LoggedInUser.getLoggedinUser().getMajor();
+		if (!getStr.equals(""))
+			spinnerMajor.setSelection(adapterMajor.getPosition(getStr));
+		// set gpa
+		getStr = LoggedInUser.getLoggedinUser().getGPA() + "";
+		if (!getStr.equals(""))
+			inputGPA.setText(getStr);
+		// set max gpa
+		getStr = LoggedInUser.getLoggedinUser().getMaxGPA() + "";
+		if (!getStr.equals(""))
+			spinnerGPA.setSelection(adapterGPA.getPosition(getStr));
+		// set wish comp type
+		getStr = LoggedInUser.getLoggedinUser().getCom_type();
+		if (!getStr.equals(""))
+			spinnerCompType.setSelection(adapterCompType.getPosition(getStr));
+		// set wish duty
+		getStr = LoggedInUser.getLoggedinUser().getDuty();
+		if (!getStr.equals(""))
+			spinnerCompDuty.setSelection(adapterCompDuty.getPosition(getStr));
+		// set wish comp name
+		getStr = LoggedInUser.getLoggedinUser().getCom_name();
+		if (!getStr.equals(""))
+			tvSelectedComp.setText(getStr);
+		// set gender
+		getStr = LoggedInUser.getLoggedinUser().getGender() + "";
+		if (!getStr.equals("")) {
+			if (getStr.equals("false")) { // 남자면
+				buttonMale.setBackgroundResource(R.drawable.button_border_after);
+				buttonMale.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.mint));
+			} else {  // 여자면
+				buttonFemale.setBackgroundResource(R.drawable.button_border_after);
+				buttonFemale.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.mint));
+			}
+		}
+		// set age
+		getStr = LoggedInUser.getLoggedinUser().getAge() + "";
+		if (!getStr.equals(""))
+			textViewBirthday.setText(getStr);
+		// set career
+		getStr = LoggedInUser.getLoggedinUser().getCareer();
+		if (!getStr.equals("")) {
+			getStr = getStr.substring(1, getStr.length() - 1);
+			String[] tokens = getStr.split(":", 0);
+			spinnerWorkExp.setSelection(adapterWorkExp.getPosition(tokens[0]));
+			tvSelectedCompExp.setText(tokens[1]);
+			inputExpMonths.setText(tokens[2]);
+		}
+		// set toeic
+		getStr = LoggedInUser.getLoggedinUser().getToeic() + "";
+		if (!getStr.equals("")) {
+			editTextToeic.setText(getStr);
+		}
+		// set certifications
+		getStr = LoggedInUser.getLoggedinUser().getCertifi();
+		if (!getStr.equals("")) {
+			textViewAddCert.setText(getStr);
+		}
 
 		updateDisplay();
 	}
