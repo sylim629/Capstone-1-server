@@ -640,20 +640,6 @@ public class ExtraInfoActivity extends AppCompatActivity
 				Calendar calendar = Calendar.getInstance();
 				int age = calendar.get(Calendar.YEAR) - year;
 
-//                if (Objects.equals(textViewUniSearch.getText().toString(), "")
-//                        || Objects.equals(spinnerMajor.getSelectedItem().toString(), "-선택-")
-//                        || Objects.equals(inputGPA.getText().toString(), "")
-//                        || Objects.equals(spinnerGPA.getSelectedItem().toString(), "-선택-")
-//                        || Objects.equals(spinnerCompType.getSelectedItem().toString(), "-선택-")
-//                        || Objects.equals(spinnerCompDuty.getSelectedItem().toString(), "-선택-")
-//                        || Objects.equals(tvSelectedComp.getText().toString(), "")
-//                        || (!isMaleClicked && !isFemaleClicked)
-//                        || age == 0 || Objects.equals(spinnerWorkExp.getSelectedItem().toString(), "-선택-")
-//                        || Objects.equals(tvSelectedCompExp.getText().toString(), "")) {
-//                    Toast.makeText(this, "입력하지 않은 부분이 있습니다.", Toast.LENGTH_LONG).show();
-//                    break;
-//                }
-
 				if (!inputGPA.getText().toString().equals("")) {
 					if (!(Double.parseDouble(inputGPA.getText().toString()) <= 4.5 && Double.parseDouble(inputGPA.getText().toString()) >= 0)) {
 						Toast.makeText(this, "올바른 학점을 입력해주세요.", Toast.LENGTH_LONG).show();
@@ -713,7 +699,7 @@ public class ExtraInfoActivity extends AppCompatActivity
 				if (!careerTemp.equals("")) {
 					String[] tokens = careerTemp.split("/", 0);
 					for (String token : tokens) {
-						careerToSend += token + ":";    //Fav아이디들을 arrayList에 저장
+						careerToSend += token + ":";    // Fav아이디들을 arrayList에 저장
 					}
 					careerToSend += "|";
 				}
@@ -725,7 +711,9 @@ public class ExtraInfoActivity extends AppCompatActivity
 						+ ";" + LoggedInUser.getLoggedinUser().getCertifi() + ";" + LoggedInUser.getLoggedinUser().getGPA()
 						+ ";" + LoggedInUser.getLoggedinUser().getMaxGPA() + ";" + careerToSend + ";";
 
-				while (userInfoUpdateMsg.contains(";;") || userInfoUpdateMsg.contains(";null")) {
+				while (userInfoUpdateMsg.contains(";;") || userInfoUpdateMsg.contains(";null") || userInfoUpdateMsg.contains(";|;") || userInfoUpdateMsg.contains(";|인턴:|;")) {
+					userInfoUpdateMsg = userInfoUpdateMsg.replace(";|인턴:|;", ";!;");
+					userInfoUpdateMsg = userInfoUpdateMsg.replace(";|;", ";!;");
 					userInfoUpdateMsg = userInfoUpdateMsg.replace(";;", ";!;");
 					userInfoUpdateMsg = userInfoUpdateMsg.replace(";null", ";!");
 				}
