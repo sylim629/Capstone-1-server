@@ -655,9 +655,13 @@ public class ExtraInfoActivity extends AppCompatActivity
 				Log.d("TAG", "" + LoggedInUser.getLoggedinUser().getCertifi());
 				LoggedInUser.getLoggedinUser().setCom_name(tvSelectedComp.getText().toString());
 				Log.d("TAG", "" + LoggedInUser.getLoggedinUser().getCom_name());
-				LoggedInUser.getLoggedinUser().setCom_type(spinnerCompType.getSelectedItem().toString());
+				if(!spinnerCompType.getSelectedItem().toString().equals("-선택-")){
+					LoggedInUser.getLoggedinUser().setCom_type(spinnerCompType.getSelectedItem().toString());
+				}
 				Log.d("TAG", "" + LoggedInUser.getLoggedinUser().getCom_type());
-				LoggedInUser.getLoggedinUser().setDuty(spinnerCompDuty.getSelectedItem().toString());
+				if(!spinnerCompDuty.getSelectedItem().toString().equals("-선택-")){
+					LoggedInUser.getLoggedinUser().setDuty(spinnerCompDuty.getSelectedItem().toString());
+				}
 				Log.d("TAG", "" + LoggedInUser.getLoggedinUser().getDuty());
 				boolean gender = false;
 				if (isFemaleClicked)
@@ -670,7 +674,9 @@ public class ExtraInfoActivity extends AppCompatActivity
 					LoggedInUser.getLoggedinUser().setGPA(Double.parseDouble(inputGPA.getText().toString()));
 					Log.d("TAG", "" + LoggedInUser.getLoggedinUser().getGPA());
 				}
-				LoggedInUser.getLoggedinUser().setMajor(spinnerMajor.getSelectedItem().toString());
+				if(!spinnerMajor.getSelectedItem().toString().equals("-선택-")){
+					LoggedInUser.getLoggedinUser().setMajor(spinnerMajor.getSelectedItem().toString());
+				}
 				Log.d("TAG", "" + LoggedInUser.getLoggedinUser().getMajor());
 				if (!spinnerGPA.getSelectedItem().toString().equals("-선택-")) {
 					LoggedInUser.getLoggedinUser().setMaxGPA(Double.parseDouble(spinnerGPA.getSelectedItem().toString()));
