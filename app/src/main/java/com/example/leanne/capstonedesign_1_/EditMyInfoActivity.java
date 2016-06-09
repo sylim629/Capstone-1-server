@@ -1,7 +1,6 @@
 package com.example.leanne.capstonedesign_1_;
 
 import android.annotation.TargetApi;
-import android.app.DatePickerDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
@@ -18,7 +17,6 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -29,7 +27,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
@@ -38,18 +35,15 @@ import java.util.concurrent.ExecutionException;
  * Created by Chloe on 4/12/2016.
  * 개인정보 수정 탭 화면
  */
-public class EditMyInfoActivity extends AppCompatActivity
-		implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
+public class EditMyInfoActivity extends AppCompatActivity implements View.OnClickListener {
 	DisplayMetrics displaymetrics = new DisplayMetrics();
 	int screenWidth, screenHeight;
 	private Button buttonMale;
 	private Button buttonFemale;
 	static boolean isFemaleClicked, isMaleClicked;
 
-	private int year, month, day;
-	private TextView textViewBirthday;
-
 	EditText inputGPA;
+	EditText editTextAge;
 	EditText inputExpMonths;
 	EditText editTextToeic;
 
@@ -98,17 +92,10 @@ public class EditMyInfoActivity extends AppCompatActivity
 		isMaleClicked = false;
 		isFemaleClicked = false;
 
+		editTextAge = (EditText) findViewById(R.id.input_age);
 		inputGPA = (EditText) findViewById(R.id.input_gpa);
 		inputExpMonths = (EditText) findViewById(R.id.comp_exp_months);
 		editTextToeic = (EditText) findViewById(R.id.editText_toeic);
-
-		final Calendar c = Calendar.getInstance();
-		year = c.get(Calendar.YEAR);
-		month = c.get(Calendar.MONTH);
-		day = c.get(Calendar.DAY_OF_MONTH);
-
-		textViewBirthday = (TextView) findViewById(R.id.text_birthday);
-		textViewBirthday.setOnClickListener(this);
 		tvSelectedComp = (TextView) findViewById(R.id.input_company);
 		tvSelectedComp.setOnClickListener(this);
 		textViewUniSearch = (TextView) findViewById(R.id.uni_extra_input);
@@ -168,9 +155,8 @@ public class EditMyInfoActivity extends AppCompatActivity
 			textViewUniSearch.setText(LoggedInUser.getLoggedinUser().getUniv());
 		// set major spinner
 		getStr = LoggedInUser.getLoggedinUser().getMajor();
-		int position = adapterMajor.getPosition(getStr);
 		if (!getStr.equals("")) {
-			spinnerMajor.setSelection(position);
+			spinnerMajor.setSelection(adapterMajor.getPosition(getStr));
 		}
 
 		// set gpa
@@ -207,7 +193,7 @@ public class EditMyInfoActivity extends AppCompatActivity
 		// set age
 		getStr = LoggedInUser.getLoggedinUser().getAge() + "";
 		if (!getStr.equals(""))
-			textViewBirthday.setText(getStr);
+			editTextAge.setText(getStr);
 		// set career
 		getStr = LoggedInUser.getLoggedinUser().getCareer();
 		if (!getStr.equals("")) {
@@ -227,28 +213,6 @@ public class EditMyInfoActivity extends AppCompatActivity
 		if (!getStr.equals("")) {
 			textViewAddCert.setText(getStr.substring(1, getStr.length()-1));
 		}
-
-		updateDisplay();
-	}
-
-	// attach to an onclick handler to show the date picker
-	public void showDatePickerDialog() {
-		DatePickerFragment newFragment = new DatePickerFragment();
-		newFragment.show(getSupportFragmentManager(), "datePicker");
-	}
-
-	// handle the date selected
-	@Override
-	public void onDateSet(DatePicker view, int setYear, int setMonth, int setDay) {
-		year = setYear;
-		month = setMonth;
-		day = setDay;
-		updateDisplay();
-	}
-
-	private void updateDisplay() {
-		this.textViewBirthday.setText(
-				new StringBuilder().append(year).append(".").append(month + 1).append(".").append(day));
 	}
 
 	private void addFirstCertificate() {
@@ -346,7 +310,7 @@ public class EditMyInfoActivity extends AppCompatActivity
 						}
 					});
 					newCertTextViews.add(newInputText);
-					baseLayout.addView(newInputText, params);	///////////   error
+					baseLayout.addView(newInputText, params);
 
 					LinearLayout layoutBottom = (LinearLayout) findViewById(R.id.filler_layout);
 					RelativeLayout.LayoutParams paramsBottom = new RelativeLayout.LayoutParams(
@@ -685,10 +649,6 @@ public class EditMyInfoActivity extends AppCompatActivity
 					isMaleClicked = false;
 				}
 				break;
-			case R.id.text_birthday:
-//                showDialog(DATE_DIALOG_ID);
-				showDatePickerDialog();
-				break;
 			case R.id.input_company_exp:
 				addCompany(false);
 				break;
@@ -710,9 +670,7 @@ public class EditMyInfoActivity extends AppCompatActivity
 				if (isMaleClicked)
 					gender = false;
 				LoggedInUser.getLoggedinUser().setGender(gender);
-				Calendar calendar = Calendar.getInstance();
-				int age = calendar.get(Calendar.YEAR) - year;
-				LoggedInUser.getLoggedinUser().setAge(age);
+				LoggedInUser.getLoggedinUser().setAge(Integer.parseInt(editTextAge.getText().toString()));
 				String workExp = "";
 				if (Objects.equals(spinnerWorkExp.getSelectedItem().toString(), "없음") || Objects.equals(spinnerWorkExp.getSelectedItem().toString(), "-선택-"))
 					LoggedInUser.getLoggedinUser().setCareer("");
