@@ -11,20 +11,20 @@ import java.util.concurrent.ExecutionException;
  * 합격률 보여주는 페이지
  */
 public class AcceptRateActivity extends Activity {
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_accept_rate);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_accept_rate);
 
-		initView();
-	}
+        initView();
+    }
 
-	private void initView() {
-		TextView acceptRate = (TextView) findViewById(R.id.accept_rate);
-		// 합격 가능성 % 값 받기
+    private void initView() {
+        TextView acceptRate = (TextView)findViewById(R.id.accept_rate);
+        // 합격 가능성 % 값 받기
 
-		RequestMsgSender acceptRateMsgSender = (RequestMsgSender) new RequestMsgSender().execute("13;");
-		String acceptRateResult = null;
+        RequestMsgSender acceptRateMsgSender = (RequestMsgSender) new RequestMsgSender().execute("13;");
+        String acceptRateResult = null;
 
 		try {
 			acceptRateResult = acceptRateMsgSender.get();
@@ -35,9 +35,9 @@ public class AcceptRateActivity extends Activity {
 		acceptRate.setText(acceptRateResult + "%");  // 그냥 테스트값
 	}
 
-	@Override
-	public void onBackPressed() {
-		this.finish();
-		overridePendingTransition(R.anim.animation_enter_left2right, R.anim.animation_leave_left2right);
-	}
+    @Override
+    public void onBackPressed() {
+        this.finish();
+        overridePendingTransition(R.anim.animation_enter_left2right, R.anim.animation_leave_left2right);
+    }
 }

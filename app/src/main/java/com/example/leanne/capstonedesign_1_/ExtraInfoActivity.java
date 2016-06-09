@@ -2,6 +2,7 @@ package com.example.leanne.capstonedesign_1_;
 
 import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -711,24 +712,21 @@ public class ExtraInfoActivity extends AppCompatActivity
 						+ ";" + LoggedInUser.getLoggedinUser().getCertifi() + ";" + LoggedInUser.getLoggedinUser().getGPA()
 						+ ";" + LoggedInUser.getLoggedinUser().getMaxGPA() + ";" + careerToSend + ";";
 
-				while (userInfoUpdateMsg.contains(";;") || userInfoUpdateMsg.contains(";null") || userInfoUpdateMsg.contains(";|;")) {
-					userInfoUpdateMsg = userInfoUpdateMsg.replace(";|;", ";!;");
-					userInfoUpdateMsg = userInfoUpdateMsg.replace(";;", ";!;");
-					userInfoUpdateMsg = userInfoUpdateMsg.replace(";null", ";!");
-				}
-				////////////////////////////////////////////////////////////////////////////////////////////////////////
-				RequestMsgSender updateMsgSender = (RequestMsgSender) new RequestMsgSender()
-						.execute(userInfoUpdateMsg);
-				//////////////////////////////////////////////////////////////////////////
-				String updateResult = null;
-				try {
-					updateResult = updateMsgSender.get();
-				} catch (InterruptedException | ExecutionException e) {
-					e.printStackTrace();
-				}
-				if (updateResult == null)
-					Log.d("updateResult", "null임....");
-				////////////////////////////////////////////////////////////////////////////////////////////////////////
+	            while(userInfoUpdateMsg.contains(";;")||userInfoUpdateMsg.contains(";null")){
+		            userInfoUpdateMsg = userInfoUpdateMsg.replace(";;", ";!;");
+                    userInfoUpdateMsg = userInfoUpdateMsg.replace(";null", ";!");
+	            }
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////
+                 RequestMsgSender updateMsgSender = (RequestMsgSender) new RequestMsgSender()
+                      .execute(userInfoUpdateMsg);
+                //////////////////////////////////////////////////////////////////////////
+                 String updateResult = null;
+                 try {
+                      updateResult = updateMsgSender.get();
+                 } catch (InterruptedException | ExecutionException e) {
+                      e.printStackTrace();
+                 }
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 				Toast.makeText(getApplicationContext(), "추가정보 입력 완료", Toast.LENGTH_LONG).show();
 				Intent intentHome2 = new Intent(this, HomeActivity.class);
