@@ -157,12 +157,6 @@ public class EditMyInfoActivity extends AppCompatActivity
 		//////////////////////////////////////////////////////////////////////////////////////////
 		// INITIALIZE USER INFO
 		//////////////////////////////////////////////////////////////////////////////////////////
-//		TextView userName = (TextView) findViewById(R.id.text_user_name);
-//		userName.setText(LoggedInUser.getLoggedinUser().getUserName());
-//		TextView userID = (TextView) findViewById(R.id.text_user_id);
-//		userID.setText(LoggedInUser.getLoggedinUser().getId());
-//		textViewUniSearch.setText(LoggedInUser.getLoggedinUser().getUniv());
-//		spinnerMajor.setPrompt(LoggedInUser.getLoggedinUser().getMajor());
 		String getStr;
 		TextView userName = (TextView) findViewById(R.id.text_user_name);
 		userName.setText(LoggedInUser.getLoggedinUser().getUserName());
@@ -271,21 +265,18 @@ public class EditMyInfoActivity extends AppCompatActivity
 		listCerts.setAdapter(adapterCert);
 		listCerts.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
-		EditText editTextSearchCert = (EditText) popupLayout.findViewById(R.id.cert_name);
-		final String inputCert = editTextSearchCert.getText().toString();
+		final EditText editTextSearchCert = (EditText) popupLayout.findViewById(R.id.cert_name);
 		Button buttonSearchCert = (Button) popupLayout.findViewById(R.id.button_search_cert);
 		buttonSearchCert.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				String inputCert = editTextSearchCert.getText().toString();
 				arrayListCerts.clear();
 				adapterCert.clear();
 				// inputCert에 해당하는 자격증을 찾아서 arrayListCerts에 저장
-				// temp
-				Log.d("TAG", "망할");
-				RequestMsgSender certifiSearchMsgSender = (RequestMsgSender) new RequestMsgSender()
-						.execute("12;" + inputCert + ";");
+				RequestMsgSender certifiSearchMsgSender =
+						(RequestMsgSender) new RequestMsgSender().execute("12;" + inputCert + ";");
 				String certifiSearchResult = null;
-
 				try {
 					certifiSearchResult = certifiSearchMsgSender.get();
 				} catch (InterruptedException | ExecutionException e) {
@@ -294,11 +285,12 @@ public class EditMyInfoActivity extends AppCompatActivity
 				assert certifiSearchResult != null;
 				String[] tokens = certifiSearchResult.split("\\|");
 				Collections.addAll(arrayListCerts, tokens);
-				arrayListCerts.add("정보처리기사");
-				arrayListCerts.add("정보보안기사");
-				arrayListCerts.add("정보보안산업기사");
-				arrayListCerts.add("정보시스템감사사");
-				arrayListCerts.add("정보처리산업기사");
+				// temp
+//				arrayListCerts.add("정보처리기사");
+//				arrayListCerts.add("정보보안기사");
+//				arrayListCerts.add("정보보안산업기사");
+//				arrayListCerts.add("정보시스템감사사");
+//				arrayListCerts.add("정보처리산업기사");
 				// end of temp
 				for (int i = 0; i < arrayListCerts.size(); i++) {
 					adapterCert.add(arrayListCerts.get(i));
@@ -413,11 +405,11 @@ public class EditMyInfoActivity extends AppCompatActivity
 				String[] tokens = certifiSearchResult.split("\\|");
 				Collections.addAll(arrayListCerts, tokens);
 				// temp
-				arrayListCerts.add("정보처리기사");
-				arrayListCerts.add("정보보안기사");
-				arrayListCerts.add("정보보안산업기사");
-				arrayListCerts.add("정보시스템감사사");
-				arrayListCerts.add("정보처리산업기사");
+//				arrayListCerts.add("정보처리기사");
+//				arrayListCerts.add("정보보안기사");
+//				arrayListCerts.add("정보보안산업기사");
+//				arrayListCerts.add("정보시스템감사사");
+//				arrayListCerts.add("정보처리산업기사");
 				// end of temp
 				for (int i = 0; i < arrayListCerts.size(); i++) {
 					adapterCert.add(arrayListCerts.get(i));
@@ -535,9 +527,8 @@ public class EditMyInfoActivity extends AppCompatActivity
 					e.printStackTrace();
 				}
 				assert compSearchResult != null;
-				compSearchResult = compSearchResult.substring(0, compSearchResult.length() - 1);
-				Log.d("Reply MSG", compSearchResult);
-				arrayListCompanies.add(compSearchResult);
+				String[] tokens = compSearchResult.split(";");
+				Collections.addAll(arrayListCompanies, tokens);
 				adapterCompany.notifyDataSetChanged();
 				for (int i = 0; i < arrayListUni.size(); i++) {
 					adapterCompany.add(arrayListUni.get(i));
