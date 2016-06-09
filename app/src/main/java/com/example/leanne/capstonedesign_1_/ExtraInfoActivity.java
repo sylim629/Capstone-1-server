@@ -710,13 +710,15 @@ public class ExtraInfoActivity extends AppCompatActivity
 						+ ";" + LoggedInUser.getLoggedinUser().getAge() + ";" + LoggedInUser.getLoggedinUser().getToeic()
 						+ ";" + LoggedInUser.getLoggedinUser().getCertifi() + ";" + LoggedInUser.getLoggedinUser().getGPA()
 						+ ";" + LoggedInUser.getLoggedinUser().getMaxGPA() + ";" + careerToSend + ";";
+				Log.d("userInfoUpdateMsg", userInfoUpdateMsg);
 
 				while (userInfoUpdateMsg.contains(";;") || userInfoUpdateMsg.contains(";null") || userInfoUpdateMsg.contains("-선택-") || userInfoUpdateMsg.contains(";|;")) {
 					userInfoUpdateMsg = userInfoUpdateMsg.replace(";;", ";!;");
 					userInfoUpdateMsg = userInfoUpdateMsg.replace(";null", ";!");
 					userInfoUpdateMsg = userInfoUpdateMsg.replace("-선택-", "!");
-					userInfoUpdateMsg = userInfoUpdateMsg.replace(";|;", "!");
+					userInfoUpdateMsg = userInfoUpdateMsg.replace(";|;", ";!;");
 				}
+				Log.d("userInfoUpdateMsg", userInfoUpdateMsg);
 				////////////////////////////////////////////////////////////////////////////////////////////////////////
 				RequestMsgSender updateMsgSender = (RequestMsgSender) new RequestMsgSender()
 						.execute(userInfoUpdateMsg);
