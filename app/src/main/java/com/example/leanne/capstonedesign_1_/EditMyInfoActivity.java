@@ -618,8 +618,8 @@ public class EditMyInfoActivity extends AppCompatActivity
 						}
 						// 찾은 결과들은 arrayListUni에 저장
 						assert uniSearchResult != null;
-						uniSearchResult = uniSearchResult.substring(0, uniSearchResult.length() - 1);
-						Log.d("Reply MSG", uniSearchResult);
+						String[] tokens = uniSearchResult.split(";");
+						Collections.addAll(arrayListUni, tokens);
 						arrayListUni.add(uniSearchResult);
 						adapterUni.notifyDataSetChanged();
 						for (int i = 0; i < arrayListUni.size(); i++) {
