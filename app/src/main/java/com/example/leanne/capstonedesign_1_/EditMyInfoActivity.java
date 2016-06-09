@@ -283,7 +283,7 @@ public class EditMyInfoActivity extends AppCompatActivity
 					e.printStackTrace();
 				}
 				assert certifiSearchResult != null;
-				String[] tokens = certifiSearchResult.split("\\|");
+				String[] tokens = certifiSearchResult.split(";");
 				Collections.addAll(arrayListCerts, tokens);
 				// temp
 //				arrayListCerts.add("정보처리기사");
@@ -402,7 +402,7 @@ public class EditMyInfoActivity extends AppCompatActivity
 					e.printStackTrace();
 				}
 				assert certifiSearchResult != null;
-				String[] tokens = certifiSearchResult.split("\\|");
+				String[] tokens = certifiSearchResult.split(";");
 				Collections.addAll(arrayListCerts, tokens);
 				// temp
 //				arrayListCerts.add("정보처리기사");
@@ -530,8 +530,8 @@ public class EditMyInfoActivity extends AppCompatActivity
 				String[] tokens = compSearchResult.split(";");
 				Collections.addAll(arrayListCompanies, tokens);
 				adapterCompany.notifyDataSetChanged();
-				for (int i = 0; i < arrayListUni.size(); i++) {
-					adapterCompany.add(arrayListUni.get(i));
+				for (int i = 0; i < arrayListCompanies.size(); i++) {
+					adapterCompany.add(arrayListCompanies.get(i));
 				}
 				listView.invalidateViews();
 			}
