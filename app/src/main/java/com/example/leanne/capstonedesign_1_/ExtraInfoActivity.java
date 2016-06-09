@@ -2,7 +2,6 @@ package com.example.leanne.capstonedesign_1_;
 
 import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
-import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -116,6 +115,7 @@ public class ExtraInfoActivity extends AppCompatActivity
 		textViewAddCert.setOnClickListener(this);
 
 		arrayListUni = new ArrayList<>();
+		arrayListCompanies = new ArrayList<>();
 		arrayListCerts = new ArrayList<>();
 		selectedCertList = new ArrayList<>();
 		newCertTextViews = new ArrayList<>();
@@ -435,35 +435,32 @@ public class ExtraInfoActivity extends AppCompatActivity
 		listView.setAdapter(adapterCompany);
 		listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
-		EditText editTextSearchComp = (EditText) viewCompany.findViewById(R.id.comp_name);
-		final String inputCompany = editTextSearchComp.getText().toString();
-		arrayListCompanies = new ArrayList<>();
+		final EditText editTextSearchComp = (EditText) viewCompany.findViewById(R.id.comp_name);
 		Button buttonSearchComp = (Button) viewCompany.findViewById(R.id.button_search_comp);
 		buttonSearchComp.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				String inputComp = editTextSearchComp.getText().toString();
+				Log.d("inputComp", inputComp);
 				arrayListCompanies.clear();
 				adapterCompany.clear();
-//                inputCompany 값을 대학디비에서 찾는다
-//                찾은 결과들은 arrayListCompanies에 저장
-				Log.d("TAG", "망할");
-				RequestMsgSender comapanySearchMsgSender = (RequestMsgSender) new RequestMsgSender().execute("12;" + inputCompany + ";");
-				String comapanySearchResult = null;
-
+				RequestMsgSender companySearchMsgSender =
+						(RequestMsgSender) new RequestMsgSender().execute("15;" + inputComp + ";");
+				String compSearchResult = null;
 				try {
-					comapanySearchResult = comapanySearchMsgSender.get();
+					compSearchResult = companySearchMsgSender.get();
+					Log.d("Reply MSG", compSearchResult);
 				} catch (InterruptedException | ExecutionException e) {
 					e.printStackTrace();
 				}
-				// 일단 테스트를 위해 Apple로 지정
-				arrayListCompanies.add("Apple");
-				assert comapanySearchResult != null;
-				String[] tokens = comapanySearchResult.split("\\|");
-				Collections.addAll(arrayListCerts, tokens);
-				for (int i = 0; i < arrayListCompanies.size(); i++) {
-					adapterCompany.add(arrayListCompanies.get(i));
-				}
+				assert compSearchResult != null;
+				compSearchResult = compSearchResult.substring(0, compSearchResult.length() - 1);
+				Log.d("Reply MSG", compSearchResult);
+				arrayListCompanies.add(compSearchResult);
 				adapterCompany.notifyDataSetChanged();
+				for (int i = 0; i < arrayListUni.size(); i++) {
+					adapterCompany.add(arrayListUni.get(i));
+				}
 				listView.invalidateViews();
 			}
 		});
@@ -525,32 +522,29 @@ public class ExtraInfoActivity extends AppCompatActivity
 				buttonSearchUni.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						arrayListUni.clear();
-						adapterUni.clear();
-
 						String inputUni = editTextSearchUni.getText().toString();
 						Log.d("inputUni", inputUni);
+						arrayListUni.clear();
+						adapterUni.clear();
+						// inputUni 값을 대학디비에서 찾는다
 						RequestMsgSender uniSearchMsgSender = (RequestMsgSender) new RequestMsgSender()
 								.execute("12;" + inputUni + ";");
 						String uniSearchResult = null;
-
 						try {
 							uniSearchResult = uniSearchMsgSender.get();
+							Log.d("Reply MSG", uniSearchResult);
 						} catch (InterruptedException | ExecutionException e) {
 							e.printStackTrace();
 						}
-
-						// inputUni 값을 대학디비에서 찾는다
 						// 찾은 결과들은 arrayListUni에 저장
-						// 일단 테스트를 위해 중앙대학교로 지정
-						arrayListUni.add("중앙대학교");
 						assert uniSearchResult != null;
-						String[] tokens = uniSearchResult.split("\\|");
-						Collections.addAll(arrayListCerts, tokens);
+						uniSearchResult = uniSearchResult.substring(0, uniSearchResult.length() - 1);
+						Log.d("Reply MSG", uniSearchResult);
+						arrayListUni.add(uniSearchResult);
+						adapterUni.notifyDataSetChanged();
 						for (int i = 0; i < arrayListUni.size(); i++) {
 							adapterUni.add(arrayListUni.get(i));
 						}
-						adapterUni.notifyDataSetChanged();
 						listViewUni.invalidateViews();
 					}
 				});
@@ -712,21 +706,22 @@ public class ExtraInfoActivity extends AppCompatActivity
 						+ ";" + LoggedInUser.getLoggedinUser().getCertifi() + ";" + LoggedInUser.getLoggedinUser().getGPA()
 						+ ";" + LoggedInUser.getLoggedinUser().getMaxGPA() + ";" + careerToSend + ";";
 
-	            while(userInfoUpdateMsg.contains(";;")||userInfoUpdateMsg.contains(";null")){
-		            userInfoUpdateMsg = userInfoUpdateMsg.replace(";;", ";!;");
-                    userInfoUpdateMsg = userInfoUpdateMsg.replace(";null", ";!");
-	            }
-                ////////////////////////////////////////////////////////////////////////////////////////////////////////
-                 RequestMsgSender updateMsgSender = (RequestMsgSender) new RequestMsgSender()
-                      .execute(userInfoUpdateMsg);
-                //////////////////////////////////////////////////////////////////////////
-                 String updateResult = null;
-                 try {
-                      updateResult = updateMsgSender.get();
-                 } catch (InterruptedException | ExecutionException e) {
-                      e.printStackTrace();
-                 }
-                ////////////////////////////////////////////////////////////////////////////////////////////////////////
+				while (userInfoUpdateMsg.contains(";;") || userInfoUpdateMsg.contains(";null")) {
+					userInfoUpdateMsg = userInfoUpdateMsg.replace(";;", ";!;");
+					userInfoUpdateMsg = userInfoUpdateMsg.replace(";null", ";!");
+				}
+				////////////////////////////////////////////////////////////////////////////////////////////////////////
+				RequestMsgSender updateMsgSender = (RequestMsgSender) new RequestMsgSender()
+						.execute(userInfoUpdateMsg);
+				//////////////////////////////////////////////////////////////////////////
+				String updateResult;
+				try {
+					updateResult = updateMsgSender.get();
+					Log.d("updateResult", updateResult);
+				} catch (InterruptedException | ExecutionException e) {
+					e.printStackTrace();
+				}
+				////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 				Toast.makeText(getApplicationContext(), "추가정보 입력 완료", Toast.LENGTH_LONG).show();
 				Intent intentHome2 = new Intent(this, HomeActivity.class);

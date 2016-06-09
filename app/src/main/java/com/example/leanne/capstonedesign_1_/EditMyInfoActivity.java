@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
@@ -264,27 +265,49 @@ public class EditMyInfoActivity extends AppCompatActivity
 		popupWindowCert.setFocusable(true);
 		popupWindowCert.update();
 
-//        EditText editTextSearchCert = (EditText) popupLayout.findViewById(R.id.cert_name);
-//        String inputCert = editTextSearchCert.getText().toString();
-		Button buttonSearchCert = (Button) popupLayout.findViewById(R.id.button_search_cert);
-		buttonSearchCert.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// inputCert의 값과 유사한 결과를 arrayListCerts에서 찾아서 display!!!
-
-
-			}
-		});
 		final ListView listCerts = (ListView) popupLayout.findViewById(R.id.list_cert);
 		final ArrayAdapter<String> adapterCert = new ArrayAdapter<>(this,
 				android.R.layout.simple_list_item_single_choice);
 		listCerts.setAdapter(adapterCert);
-		for (int i = 0; i < arrayListCerts.size(); i++) {
-			adapterCert.add(arrayListCerts.get(i));
-		}
 		listCerts.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
-//        selectedCertList = new ArrayList<>();
+		EditText editTextSearchCert = (EditText) popupLayout.findViewById(R.id.cert_name);
+		final String inputCert = editTextSearchCert.getText().toString();
+		Button buttonSearchCert = (Button) popupLayout.findViewById(R.id.button_search_cert);
+		buttonSearchCert.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				arrayListCerts.clear();
+				adapterCert.clear();
+				// inputCert에 해당하는 자격증을 찾아서 arrayListCerts에 저장
+				// temp
+				Log.d("TAG", "망할");
+				RequestMsgSender certifiSearchMsgSender = (RequestMsgSender) new RequestMsgSender()
+						.execute("12;" + inputCert + ";");
+				String certifiSearchResult = null;
+
+				try {
+					certifiSearchResult = certifiSearchMsgSender.get();
+				} catch (InterruptedException | ExecutionException e) {
+					e.printStackTrace();
+				}
+				assert certifiSearchResult != null;
+				String[] tokens = certifiSearchResult.split("\\|");
+				Collections.addAll(arrayListCerts, tokens);
+				arrayListCerts.add("정보처리기사");
+				arrayListCerts.add("정보보안기사");
+				arrayListCerts.add("정보보안산업기사");
+				arrayListCerts.add("정보시스템감사사");
+				arrayListCerts.add("정보처리산업기사");
+				// end of temp
+				for (int i = 0; i < arrayListCerts.size(); i++) {
+					adapterCert.add(arrayListCerts.get(i));
+				}
+				adapterCert.notifyDataSetChanged();
+				listCerts.invalidateViews();
+			}
+		});
+
 		selectedCertList.add("");
 		listCerts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
@@ -362,22 +385,47 @@ public class EditMyInfoActivity extends AppCompatActivity
 		popupWindowCert.setFocusable(true);
 		popupWindowCert.update();
 
-//        String inputCert = editTextSearchCert.getText().toString();
-		Button buttonSearchCert = (Button) popupLayout.findViewById(R.id.button_search_cert);
-		buttonSearchCert.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// inputCert의 값과 유사한 결과를 arrayListCerts에서 찾아서 display!!!
-			}
-		});
 		final ListView listCerts = (ListView) popupLayout.findViewById(R.id.list_cert);
 		final ArrayAdapter<String> adapterCert = new ArrayAdapter<>(this,
 				android.R.layout.simple_list_item_single_choice);
 		listCerts.setAdapter(adapterCert);
-		for (int i = 0; i < arrayListCerts.size(); i++) {
-			adapterCert.add(arrayListCerts.get(i));
-		}
 		listCerts.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
+		final EditText editTextSearchCert = (EditText) popupLayout.findViewById(R.id.cert_name);
+		Button buttonSearchCert = (Button) popupLayout.findViewById(R.id.button_search_cert);
+		buttonSearchCert.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				String inputCert = editTextSearchCert.getText().toString();
+				arrayListCerts.clear();
+				adapterCert.clear();
+				// inputCert에 해당하는 자격증을 찾아서 arrayListCerts에 저장
+				// temp
+				RequestMsgSender certifiSearchMsgSender =
+						(RequestMsgSender) new RequestMsgSender().execute("12;" + inputCert + ";");
+				String certifiSearchResult = null;
+				try {
+					certifiSearchResult = certifiSearchMsgSender.get();
+				} catch (InterruptedException | ExecutionException e) {
+					e.printStackTrace();
+				}
+				assert certifiSearchResult != null;
+				String[] tokens = certifiSearchResult.split("\\|");
+				Collections.addAll(arrayListCerts, tokens);
+				// temp
+				arrayListCerts.add("정보처리기사");
+				arrayListCerts.add("정보보안기사");
+				arrayListCerts.add("정보보안산업기사");
+				arrayListCerts.add("정보시스템감사사");
+				arrayListCerts.add("정보처리산업기사");
+				// end of temp
+				for (int i = 0; i < arrayListCerts.size(); i++) {
+					adapterCert.add(arrayListCerts.get(i));
+				}
+				adapterCert.notifyDataSetChanged();
+				listCerts.invalidateViews();
+			}
+		});
 
 		selectedCertList.add("");
 		isAlreadyExists = false;
@@ -462,27 +510,41 @@ public class EditMyInfoActivity extends AppCompatActivity
 		popupCompany.setFocusable(true);
 		popupCompany.update();
 
-//        EditText editTextSearchComp = (EditText) viewCompany.findViewById(R.id.comp_name);
-//        String inputCompany = editTextSearchComp.getText().toString();
-		ArrayList<String> arrayListCompanies = new ArrayList<>();
+		final ListView listView = (ListView) viewCompany.findViewById(R.id.list_company);
+		final ArrayAdapter<String> adapterCompany = new ArrayAdapter<>(this,
+				android.R.layout.simple_list_item_single_choice);
+		listView.setAdapter(adapterCompany);
+		listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
+		final EditText editTextSearchComp = (EditText) viewCompany.findViewById(R.id.comp_name);
 		Button buttonSearchComp = (Button) viewCompany.findViewById(R.id.button_search_comp);
 		buttonSearchComp.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-//                inputCompany 값을 대학디비에서 찾는다
-//                찾은 결과들은 arrayListCompanies에 저장
+				String inputComp = editTextSearchComp.getText().toString();
+				Log.d("inputComp", inputComp);
+				arrayListCompanies.clear();
+				adapterCompany.clear();
+				RequestMsgSender companySearchMsgSender =
+						(RequestMsgSender) new RequestMsgSender().execute("15;" + inputComp + ";");
+				String compSearchResult = null;
+				try {
+					compSearchResult = companySearchMsgSender.get();
+					Log.d("Reply MSG", compSearchResult);
+				} catch (InterruptedException | ExecutionException e) {
+					e.printStackTrace();
+				}
+				assert compSearchResult != null;
+				compSearchResult = compSearchResult.substring(0, compSearchResult.length() - 1);
+				Log.d("Reply MSG", compSearchResult);
+				arrayListCompanies.add(compSearchResult);
+				adapterCompany.notifyDataSetChanged();
+				for (int i = 0; i < arrayListUni.size(); i++) {
+					adapterCompany.add(arrayListUni.get(i));
+				}
+				listView.invalidateViews();
 			}
 		});
-		// 일단 테스트를 위해 Apple로 지정
-		arrayListCompanies.add("Apple");
-		ListView listView = (ListView) viewCompany.findViewById(R.id.list_company);
-		ArrayAdapter<String> adapterCompany = new ArrayAdapter<>(this,
-				android.R.layout.simple_list_item_single_choice);
-		listView.setAdapter(adapterCompany);
-		for (int i = 0; i < arrayListCompanies.size(); i++) {
-			adapterCompany.add(arrayListCompanies.get(i));
-		}
-		listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
@@ -540,14 +602,13 @@ public class EditMyInfoActivity extends AppCompatActivity
 				buttonSearchUni.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						Log.d("TAG", "Success");
 						String inputUni = editTextSearchUni.getText().toString();
 						Log.d("inputUni", inputUni);
 						arrayListUni.clear();
 						adapterUni.clear();
 						// inputUni 값을 대학디비에서 찾는다
-						RequestMsgSender uniSearchMsgSender = (RequestMsgSender) new RequestMsgSender()
-								.execute("12;" + inputUni + ";");
+						RequestMsgSender uniSearchMsgSender =
+								(RequestMsgSender) new RequestMsgSender().execute("11;" + inputUni + ";");
 						String uniSearchResult = null;
 						try {
 							uniSearchResult = uniSearchMsgSender.get();
