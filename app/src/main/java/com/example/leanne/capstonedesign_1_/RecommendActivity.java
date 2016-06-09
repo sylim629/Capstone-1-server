@@ -53,8 +53,6 @@ public class RecommendActivity extends Activity {
             e.printStackTrace();
         }
 
-		//rankingResult = "회사1;회사2;회사3;직무1;직무2;직무3;kwjel88;885;29;컴퓨터공학부;company_type1;웹기획∙웹마케팅∙PM;company_name1;gender1;univ1;정보처리기사;isEmp;3.9;4.5;|인턴:기관1:1개월|;iammeee;795;22;컴퓨터공학부;company_type2;통신∙모바일;company_name2;gender2;univ2;정보처리기사|정보보안기사;isEmp;3.5;4.5;|인턴:기관2:2개월|;qwerty101;835;27;컴퓨터공학부;company_type3;서버∙네트워크∙보안;company_name3;gender3;univ3;정보처리기사|정보보안기사;isEmp;3.85;4.5;|인턴:기관3:3개월|";
-		// kwjel88;885;29;컴퓨터공학부;company_type1;웹기획∙웹마케팅∙PM;company_name1;gender1;univ1;정보처리기사;isEmp;3.9;4.5;|인턴:기관1:1개월|;iammeee;795;22;컴퓨터공학부;company_type2;통신∙모바일;company_name2;gender2;univ2;정보처리기사|정보보안기사;isEmp;3.5;4.5;|인턴:기관2:2개월|;qwerty101;835;27;컴퓨터공학부;company_type3;서버∙네트워크∙보안;company_name3;gender3;univ3;정보처리기사|정보보안기사;isEmp;3.85;4.5;|인턴:기관3:3개월|
 		String[] tokens = rankingResult.split(";");
 		for(int i = 0 ; i < tokens.length ; i++){
 			if(tokens[i].equals("!")) tokens[i]="";
@@ -88,6 +86,17 @@ public class RecommendActivity extends Activity {
 
 		int j = 0;
 		for(int i = 0 ; j < 3 ; i+=14, j++ ) {
+			////////////
+			String cert = cutTokens[i+9];
+			String[] cert_tokens = cert.split("\\|");
+			String tmp="";
+			for(int l=0; l<cert_tokens.length; l++){
+				if(!cert_tokens[l].equals("")){
+					tmp = tmp + cert_tokens[l] + " | ";
+				}
+			}
+			tmp = tmp.substring(0, tmp.length()-2);
+			////////////
 			String str_idInfo = new String("ID : ");
 			String str_majorInfo = new String("전공 : ");
 			String str_dutyInfo = new String("직무 : ");
@@ -101,15 +110,11 @@ public class RecommendActivity extends Activity {
 			String str_empInfo = new String("취업여부: ");
 			String str_gpaInfo = new String("학점: ");
 			String str_careerInfo = new String("경력: ");
-			//---------------
-			// kwjel88;885;29;컴퓨터공학부;company_type1;웹기획∙웹마케팅∙PM;company_name1;gender1;univ1;정보처리기사;isEmp;3.9;4.5;|인턴:기관1:1개월|;iammeee;795;22;컴퓨터공학부;company_type2;통신∙모바일;company_name2;gender2;univ2;정보처리기사|정보보안기사;isEmp;3.5;4.5;|인턴:기관2:2개월|;qwerty101;835;27;컴퓨터공학부;company_type3;서버∙네트워크∙보안;company_name3;gender3;univ3;정보처리기사|정보보안기사;isEmp;3.85;4.5;|인턴:기관3:3개월|
-
 			idInfo[j] = str_idInfo += cutTokens[i];
 			majorInfo[j] = str_majorInfo += cutTokens[i + 3];
 			dutyInfo[j] = str_dutyInfo += cutTokens[i + 5];
 			toeicInfo[j] = str_toeicInfo += cutTokens[i + 1];
-			str_certifiInfo = str_certifiInfo += cutTokens[i + 9];
-			certifiInfo[j] = str_certifiInfo.replace("|", ",");
+			certifiInfo[j] = str_certifiInfo + tmp;
 			ageInfo[j] = str_ageInfo += cutTokens[i + 2];
 			wishCompTypeInfo[j] = str_wishCompTypeInfo += cutTokens[i + 4];
 			wishCompInfo[j] = str_wishCompInfo += cutTokens[i + 6];
