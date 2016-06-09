@@ -214,7 +214,7 @@ public class EditMyInfoActivity extends AppCompatActivity
 			getStr = getStr.substring(1, getStr.length() - 1);
 			String[] tokens = getStr.split(":", 0);
 			spinnerWorkExp.setSelection(adapterWorkExp.getPosition(tokens[0]));
-			tvSelectedCompExp.setText(tokens[1]);
+			tvSelectedCompExp.setText(tokens[1]);			//////// error
 			inputExpMonths.setText(tokens[2]);
 		}
 		// set toeic
@@ -225,7 +225,7 @@ public class EditMyInfoActivity extends AppCompatActivity
 		// set certifications
 		getStr = LoggedInUser.getLoggedinUser().getCertifi();
 		if (!getStr.equals("")) {
-			textViewAddCert.setText(getStr);
+			textViewAddCert.setText(getStr.substring(1, getStr.length()-1));
 		}
 
 		updateDisplay();
@@ -346,7 +346,7 @@ public class EditMyInfoActivity extends AppCompatActivity
 						}
 					});
 					newCertTextViews.add(newInputText);
-					baseLayout.addView(newInputText, params);
+					baseLayout.addView(newInputText, params);	///////////   error
 
 					LinearLayout layoutBottom = (LinearLayout) findViewById(R.id.filler_layout);
 					RelativeLayout.LayoutParams paramsBottom = new RelativeLayout.LayoutParams(
@@ -577,6 +577,7 @@ public class EditMyInfoActivity extends AppCompatActivity
 		});
 	}
 
+	@TargetApi(Build.VERSION_CODES.KITKAT)
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -695,6 +696,76 @@ public class EditMyInfoActivity extends AppCompatActivity
 				addFirstCertificate();
 				break;
 			case R.id.button_my_info_save:
+				/////// saved change info in LoggedInUser //////
+				LoggedInUser.getLoggedinUser().setUniv(textViewUniSearch.getText().toString());
+				LoggedInUser.getLoggedinUser().setMajor(spinnerMajor.getSelectedItem().toString());
+				LoggedInUser.getLoggedinUser().setGPA(Double.parseDouble(inputGPA.getText().toString()));
+				LoggedInUser.getLoggedinUser().setMaxGPA(Double.parseDouble(spinnerGPA.getSelectedItem().toString()));
+				LoggedInUser.getLoggedinUser().setCom_type(spinnerCompType.getSelectedItem().toString());
+				LoggedInUser.getLoggedinUser().setDuty(spinnerCompDuty.getSelectedItem().toString());
+				LoggedInUser.getLoggedinUser().setCom_name(tvSelectedComp.getText().toString());
+				boolean gender = false;
+				if (isFemaleClicked)
+					gender = true;
+				if (isMaleClicked)
+					gender = false;
+				LoggedInUser.getLoggedinUser().setGender(gender);
+				Calendar calendar = Calendar.getInstance();
+				int age = calendar.get(Calendar.YEAR) - year;
+				LoggedInUser.getLoggedinUser().setAge(age);
+				String workExp = "";
+				if (Objects.equals(spinnerWorkExp.getSelectedItem().toString(), "없음") || Objects.equals(spinnerWorkExp.getSelectedItem().toString(), "-선택-"))
+					LoggedInUser.getLoggedinUser().setCareer("");
+				else {
+					workExp = workExp.concat(spinnerWorkExp.getSelectedItem().toString()).concat("/")
+							.concat(tvSelectedCompExp.getText().toString()).concat("/")
+							.concat(inputExpMonths.getText().toString());
+					LoggedInUser.getLoggedinUser().setCareer(workExp);
+				}
+				LoggedInUser.getLoggedinUser().setToeic(Integer.parseInt(editTextToeic.getText().toString()));
+				////
+				String certificates = "";
+				for (int i = 0; i < selectedCertList.size(); i++) {
+					certificates = certificates.concat("|").concat(selectedCertList.get(i));
+				}
+				certificates = certificates.concat("|");
+				LoggedInUser.getLoggedinUser().setCertifi(certificates);
+				/////
+				String careerTemp = LoggedInUser.getLoggedinUser().getCareer();
+				String careerToSend = "|";
+				if (!careerTemp.equals("")) {
+					String[] tokens = careerTemp.split("/", 0);
+					for (String token : tokens) {
+						careerToSend += token + ":";    // Fav아이디들을 arrayList에 저장
+					}
+					careerToSend += "|";
+				}
+				LoggedInUser.getLoggedinUser().setCareer(careerToSend);
+				/////// send edited info ///////
+				String userInfoUpdateMsg = "4;" + LoggedInUser.getLoggedinUser().getUniv() + ";" + LoggedInUser.getLoggedinUser().getMajor()
+						+ ";" + LoggedInUser.getLoggedinUser().getCom_type() + ";" + LoggedInUser.getLoggedinUser().getDuty()
+						+ ";" + LoggedInUser.getLoggedinUser().getCom_name() + ";" + LoggedInUser.getLoggedinUser().getGender()
+						+ ";" + LoggedInUser.getLoggedinUser().getAge() + ";" + LoggedInUser.getLoggedinUser().getToeic()
+						+ ";" + LoggedInUser.getLoggedinUser().getCertifi() + ";" + LoggedInUser.getLoggedinUser().getGPA()
+						+ ";" + LoggedInUser.getLoggedinUser().getMaxGPA() + ";" + careerToSend + ";";
+
+				while (userInfoUpdateMsg.contains(";;") || userInfoUpdateMsg.contains(";null")) {
+					userInfoUpdateMsg = userInfoUpdateMsg.replace(";;", ";!;");
+					userInfoUpdateMsg = userInfoUpdateMsg.replace(";null", ";!");
+				}
+				////////////////////////////////////////////////////////////////////////////////////////////////////////
+				RequestMsgSender updateMsgSender = (RequestMsgSender) new RequestMsgSender()
+						.execute(userInfoUpdateMsg);
+				//////////////////////////////////////////////////////////////////////////
+				String updateResult;
+				try {
+					updateResult = updateMsgSender.get();
+					Log.d("updateResult", updateResult);
+				} catch (InterruptedException | ExecutionException e) {
+					e.printStackTrace();
+				}
+				///////////////////////////////
+
 				// save info on DB
 				// if DB save success
 				Toast.makeText(this, "저장 완료", Toast.LENGTH_SHORT).show();
