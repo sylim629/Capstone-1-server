@@ -173,6 +173,7 @@ public class EditMyInfoActivity extends AppCompatActivity
 			textViewUniSearch.setText(LoggedInUser.getLoggedinUser().getUniv());
 		// set major spinner
 		getStr = LoggedInUser.getLoggedinUser().getMajor();
+		Log.d("getMajor", getStr);
 		if (!getStr.equals(""))
 			spinnerMajor.setSelection(adapterMajor.getPosition(getStr));
 		// set gpa
@@ -550,13 +551,15 @@ public class EditMyInfoActivity extends AppCompatActivity
 						String uniSearchResult = null;
 						try {
 							uniSearchResult = uniSearchMsgSender.get();
+							Log.d("Reply MSG", uniSearchResult);
 						} catch (InterruptedException | ExecutionException e) {
 							e.printStackTrace();
 						}
 						// 찾은 결과들은 arrayListUni에 저장
-						// 일단 테스트를 위해 중앙대학교로 지정
-						arrayListUni.add("중앙대학교");
-						Log.d("TAG", "" + arrayListUni.size());
+						assert uniSearchResult != null;
+						uniSearchResult = uniSearchResult.substring(0, uniSearchResult.length() - 1);
+						Log.d("Reply MSG", uniSearchResult);
+						arrayListUni.add(uniSearchResult);
 						adapterUni.notifyDataSetChanged();
 						for (int i = 0; i < arrayListUni.size(); i++) {
 							adapterUni.add(arrayListUni.get(i));
