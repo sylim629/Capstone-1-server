@@ -210,7 +210,7 @@ public class EditMyInfoActivity extends AppCompatActivity
 			textViewBirthday.setText(getStr);
 		// set career
 		getStr = LoggedInUser.getLoggedinUser().getCareer();
-		if (!getStr.equals("")) {
+		if (!getStr.equals("") && !getStr.equals("|")) {
 			getStr = getStr.substring(1, getStr.length() - 1);
 			String[] tokens = getStr.split(":", 0);
 			spinnerWorkExp.setSelection(adapterWorkExp.getPosition(tokens[0]));
@@ -224,7 +224,7 @@ public class EditMyInfoActivity extends AppCompatActivity
 		}
 		// set certifications
 		getStr = LoggedInUser.getLoggedinUser().getCertifi();
-		if (!getStr.equals("")) {
+		if (!getStr.equals("") && !getStr.equals("|")) {
 			textViewAddCert.setText(getStr.substring(1, getStr.length()-1));
 		}
 
@@ -752,11 +752,12 @@ public class EditMyInfoActivity extends AppCompatActivity
 				while (userInfoUpdateMsg.contains(";;") || userInfoUpdateMsg.contains(";null")) {
 					userInfoUpdateMsg = userInfoUpdateMsg.replace(";;", ";!;");
 					userInfoUpdateMsg = userInfoUpdateMsg.replace(";null", ";!");
+					userInfoUpdateMsg = userInfoUpdateMsg.replace("-선택-", "!");
+					userInfoUpdateMsg = userInfoUpdateMsg.replace(";|;", ";!;");
 				}
 				////////////////////////////////////////////////////////////////////////////////////////////////////////
 				RequestMsgSender updateMsgSender = (RequestMsgSender) new RequestMsgSender()
 						.execute(userInfoUpdateMsg);
-				//////////////////////////////////////////////////////////////////////////
 				String updateResult;
 				try {
 					updateResult = updateMsgSender.get();
