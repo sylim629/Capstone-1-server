@@ -300,22 +300,21 @@
                 android:layout_below="@id/sex_extra"
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="10dp"
-                android:text="@string/birthday"
+                android:text="나이"
                 android:textColor="@android:color/white"
                 android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/text_birthday"
+            <EditText
+                android:id="@+id/input_age"
                 android:layout_width="210dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/sex_extra"
                 android:layout_marginBottom="10dp"
                 android:background="@android:color/white"
-                android:clickable="true"
+                android:inputType="number"
                 android:padding="10dp"
-                android:singleLine="true"
-                android:textSize="18sp" />
+                android:singleLine="true"/>
 
             <TextView
                 android:layout_width="wrap_content"
