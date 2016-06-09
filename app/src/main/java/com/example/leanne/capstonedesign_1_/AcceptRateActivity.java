@@ -32,7 +32,7 @@ public class AcceptRateActivity extends Activity {
 			e.printStackTrace();
 		}
 
-		acceptRate.setText(acceptRateResult + "%");  // 그냥 테스트값
+		acceptRate.setText(acceptRateResult);  // 그냥 테스트값
 	}
 
     @Override
