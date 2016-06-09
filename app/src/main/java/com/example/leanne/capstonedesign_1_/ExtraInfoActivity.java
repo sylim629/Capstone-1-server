@@ -192,9 +192,12 @@ public class ExtraInfoActivity extends AppCompatActivity
 		final EditText editTextSearchCert = (EditText) popupLayout.findViewById(R.id.cert_name);
 		Button buttonSearchCert = (Button) popupLayout.findViewById(R.id.button_search_cert);
 		buttonSearchCert.setOnClickListener(new View.OnClickListener() {
+			@TargetApi(Build.VERSION_CODES.KITKAT)
 			@Override
 			public void onClick(View v) {
 				String inputCert = editTextSearchCert.getText().toString();
+				if (Objects.equals(inputCert, ""))
+					inputCert = "!";
 				arrayListCerts.clear();
 				adapterCert.clear();
 				// inputCert에 해당하는 자격증을 찾아서 arrayListCerts에 저장
@@ -309,9 +312,12 @@ public class ExtraInfoActivity extends AppCompatActivity
 		final EditText editTextSearchCert = (EditText) popupLayout.findViewById(R.id.cert_name);
 		Button buttonSearchCert = (Button) popupLayout.findViewById(R.id.button_search_cert);
 		buttonSearchCert.setOnClickListener(new View.OnClickListener() {
+			@TargetApi(Build.VERSION_CODES.KITKAT)
 			@Override
 			public void onClick(View v) {
 				String inputCert = editTextSearchCert.getText().toString();
+				if (Objects.equals(inputCert, ""))
+					inputCert = "!";
 				arrayListCerts.clear();
 				adapterCert.clear();
 				// inputCert에 해당하는 자격증을 찾아서 arrayListCerts에 저장
@@ -434,10 +440,13 @@ public class ExtraInfoActivity extends AppCompatActivity
 		final EditText editTextSearchComp = (EditText) viewCompany.findViewById(R.id.comp_name);
 		Button buttonSearchComp = (Button) viewCompany.findViewById(R.id.button_search_comp);
 		buttonSearchComp.setOnClickListener(new View.OnClickListener() {
+			@TargetApi(Build.VERSION_CODES.KITKAT)
 			@Override
 			public void onClick(View v) {
 				String inputComp = editTextSearchComp.getText().toString();
 				Log.d("inputComp", inputComp);
+				if (Objects.equals(inputComp, ""))
+					inputComp = "!";
 				arrayListCompanies.clear();
 				adapterCompany.clear();
 				RequestMsgSender companySearchMsgSender =
@@ -519,11 +528,13 @@ public class ExtraInfoActivity extends AppCompatActivity
 					public void onClick(View v) {
 						String inputUni = editTextSearchUni.getText().toString();
 						Log.d("inputUni", inputUni);
+						if (Objects.equals(inputUni, ""))
+							inputUni = "!";
 						arrayListUni.clear();
 						adapterUni.clear();
 						// inputUni 값을 대학디비에서 찾는다
 						RequestMsgSender uniSearchMsgSender = (RequestMsgSender) new RequestMsgSender()
-								.execute("12;" + inputUni + ";");
+								.execute("11;" + inputUni + ";");
 						String uniSearchResult = null;
 						try {
 							uniSearchResult = uniSearchMsgSender.get();
