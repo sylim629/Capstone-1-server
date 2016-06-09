@@ -620,7 +620,6 @@ public class EditMyInfoActivity extends AppCompatActivity
 						assert uniSearchResult != null;
 						String[] tokens = uniSearchResult.split(";");
 						Collections.addAll(arrayListUni, tokens);
-						arrayListUni.add(uniSearchResult);
 						adapterUni.notifyDataSetChanged();
 						for (int i = 0; i < arrayListUni.size(); i++) {
 							adapterUni.add(arrayListUni.get(i));
