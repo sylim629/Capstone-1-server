@@ -37,12 +37,10 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         backPressCloseHandler = new BackPressCloseHandler(this);
         Button buttonLogin = (Button) findViewById(R.id.button_login);
         TextView textViewRegister = (TextView) findViewById(R.id.textView_register);
-        TextView textViewFindPW = (TextView) findViewById(R.id.textView_find_pw);
         editTextID = (EditText)findViewById(R.id.editText_id);
         editTextPW = (EditText)findViewById(R.id.editText_pw);
         buttonLogin.setOnClickListener(this);
         textViewRegister.setOnClickListener(this);
-        textViewFindPW.setOnClickListener(this);
     }
 
     @Override
@@ -125,11 +123,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 startActivity(intentRegister);
                 this.overridePendingTransition(R.anim.animation_enter_right2left,
                         R.anim.animation_leave_right2left);
-                break;
-            case R.id.textView_find_pw:
-                Intent intentFindPW = new Intent(this, FindPasswordActivity.class);
-                startActivity(intentFindPW);
-                this.overridePendingTransition(R.anim.animation_enter_right2left, R.anim.animation_leave_right2left);
                 break;
         }
     }
