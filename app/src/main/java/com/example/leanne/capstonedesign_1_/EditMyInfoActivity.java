@@ -324,7 +324,7 @@ public class EditMyInfoActivity extends AppCompatActivity
 				if (Objects.equals(selectedCertList.get(0), "")) {
 					Toast.makeText(popupLayout.getContext(), "자격증을 입력해 주세요", Toast.LENGTH_SHORT).show();
 				} else {
-					RelativeLayout baseLayout = (RelativeLayout) findViewById(R.id.layout_main);
+					RelativeLayout baseLayout = (RelativeLayout) findViewById(R.id.contents_layout);
 					TextView newInputText = new TextView(EditMyInfoActivity.this);
 					newInputText.setWidth(textViewAddCert.getWidth());
 					newInputText.setHeight(textViewAddCert.getHeight());
@@ -348,7 +348,7 @@ public class EditMyInfoActivity extends AppCompatActivity
 					newCertTextViews.add(newInputText);
 					baseLayout.addView(newInputText, params);
 
-					LinearLayout layoutBottom = (LinearLayout) findViewById(R.id.layout_bottom);
+					LinearLayout layoutBottom = (LinearLayout) findViewById(R.id.filler_layout);
 					RelativeLayout.LayoutParams paramsBottom = new RelativeLayout.LayoutParams(
 							RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 					paramsBottom.addRule(RelativeLayout.BELOW, newInputText.getId());
@@ -458,7 +458,7 @@ public class EditMyInfoActivity extends AppCompatActivity
 				if (Objects.equals(selectedCertList.get(1), "")) {
 					Toast.makeText(popupLayout.getContext(), "자격증을 입력해 주세요", Toast.LENGTH_SHORT).show();
 				} else {
-					RelativeLayout baseLayout = (RelativeLayout) findViewById(R.id.layout_main);
+					RelativeLayout baseLayout = (RelativeLayout) findViewById(R.id.contents_layout);
 					TextView newInputText = new TextView(EditMyInfoActivity.this);
 					newInputText.setWidth(textViewAddCert.getWidth());
 					newInputText.setHeight(textViewAddCert.getHeight());
@@ -476,7 +476,7 @@ public class EditMyInfoActivity extends AppCompatActivity
 					newCertTextViews.add(newInputText);
 					baseLayout.addView(newInputText, params);
 
-					LinearLayout layoutBottom = (LinearLayout) findViewById(R.id.layout_bottom);
+					LinearLayout layoutBottom = (LinearLayout) findViewById(R.id.filler_layout);
 					RelativeLayout.LayoutParams paramsBottom = new RelativeLayout.LayoutParams(
 							RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 					paramsBottom.addRule(RelativeLayout.BELOW, newInputText.getId());
