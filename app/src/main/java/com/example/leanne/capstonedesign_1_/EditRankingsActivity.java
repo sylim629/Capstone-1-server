@@ -1,7 +1,8 @@
 package com.example.leanne.capstonedesign_1_;
 
-import android.app.DatePickerDialog;
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -15,7 +16,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
@@ -23,14 +24,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Collections;
+import java.util.Objects;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Chloe on 4/13/2016.
  * 맞춤형 랭킹 기준 수정 페이지
  */
-public class EditRankingsActivity extends AppCompatActivity
-		implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
+public class EditRankingsActivity extends AppCompatActivity implements View.OnClickListener {
 	DisplayMetrics displaymetrics = new DisplayMetrics();
 	int screenWidth, screenHeight;
 
@@ -38,15 +40,20 @@ public class EditRankingsActivity extends AppCompatActivity
 	private Button buttonFemale;
 	static boolean isFemaleClicked, isMaleClicked;
 
-	private int year, month, day;
-	private TextView textViewBirthday;
-
 	private PopupWindow popupCompany;
-	TextView tvSelectedComp;
+	TextView tvCompSearch;
+	ArrayList<String> arrayListCompanies;
 	String selectedCompany;
-	private PopupWindow popupWindowUni;
+	private PopupWindow popupUniversity;
 	private TextView textViewUniSearch;
+	ArrayList<String> arrayListUni;
 	String selectedUni;
+
+	Spinner spinnerMajor;
+	Spinner spinnerCompType;
+	Spinner spinnerCompDuty;
+
+	EditText editTextAge;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -71,59 +78,67 @@ public class EditRankingsActivity extends AppCompatActivity
 		isMaleClicked = false;
 		isFemaleClicked = false;
 
-		final Calendar c = Calendar.getInstance();
-		year = c.get(Calendar.YEAR);
-		month = c.get(Calendar.MONTH);
-		day = c.get(Calendar.DAY_OF_MONTH);
-
-		textViewBirthday = (TextView) findViewById(R.id.text_birthday);
-		textViewBirthday.setOnClickListener(this);
-		tvSelectedComp = (TextView) findViewById(R.id.input_company);
-		tvSelectedComp.setOnClickListener(this);
+		tvCompSearch = (TextView) findViewById(R.id.input_company);
+		tvCompSearch.setOnClickListener(this);
 		textViewUniSearch = (TextView) findViewById(R.id.uni_extra_input);
 		textViewUniSearch.setOnClickListener(this);
 
-		Spinner spinnerMajor = (Spinner) findViewById(R.id.spinner_major);
+		arrayListUni = new ArrayList<>();
+		arrayListCompanies = new ArrayList<>();
+
+		spinnerMajor = (Spinner) findViewById(R.id.spinner_major);
 		ArrayAdapter adapterMajor = ArrayAdapter.createFromResource(this, R.array.majors,
 				android.R.layout.simple_spinner_item);
 		adapterMajor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinnerMajor.setAdapter(adapterMajor);
 
-		Spinner spinnerCompType = (Spinner) findViewById(R.id.spinner_company_type);
+		spinnerCompType = (Spinner) findViewById(R.id.spinner_company_type);
 		ArrayAdapter adapterCompType = ArrayAdapter.createFromResource(this, R.array.company_types,
 				android.R.layout.simple_spinner_item);
 		adapterCompType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinnerCompType.setAdapter(adapterCompType);
 
-		Spinner spinnerCompDuty = (Spinner) findViewById(R.id.spinner_company_duty);
+		spinnerCompDuty = (Spinner) findViewById(R.id.spinner_company_duty);
 		ArrayAdapter adapterCompDuty = ArrayAdapter.createFromResource(this, R.array.company_duties,
 				android.R.layout.simple_spinner_item);
 		adapterCompDuty.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinnerCompDuty.setAdapter(adapterCompDuty);
 
+		editTextAge = (EditText) findViewById(R.id.input_age);
+
 		//////////////////////////////////////////////////////////////////////////////////////////
 		// INITIALIZE 맞춤형 랭킹 기준
 		//////////////////////////////////////////////////////////////////////////////////////////
-
-		updateDisplay();
-	}
-
-	public void showDatePickerDialog() {
-		DatePickerFragment newFragment = new DatePickerFragment();
-		newFragment.show(getSupportFragmentManager(), "datePicker");
-	}
-
-	@Override
-	public void onDateSet(DatePicker view, int setYear, int setMonth, int setDay) {
-		year = setYear;
-		month = setMonth;
-		day = setDay;
-		updateDisplay();
-	}
-
-	private void updateDisplay() {
-		this.textViewBirthday.setText(
-				new StringBuilder().append(year).append(".").append(month + 1).append(".").append(day));
+		String s;
+		s = LoggedInUser.getLoggedinUser().getSearch_Univ();
+		if (!s.equals(""))
+			textViewUniSearch.setText(s);
+		s = LoggedInUser.getLoggedinUser().getSearch_Major();
+		if (!s.equals("")) {
+			spinnerMajor.setSelection(adapterMajor.getPosition(s));
+		}
+		s = LoggedInUser.getLoggedinUser().getSearch_Com_type();
+		if (!s.equals(""))
+			spinnerCompType.setSelection(adapterCompType.getPosition(s));
+		s = LoggedInUser.getLoggedinUser().getSearch_Duty();
+		if (!s.equals(""))
+			spinnerCompDuty.setSelection(adapterCompDuty.getPosition(s));
+		s = LoggedInUser.getLoggedinUser().getSearch_Com_type();
+		if (!s.equals(""))
+			tvCompSearch.setText(s);
+		s = LoggedInUser.getLoggedinUser().getSearch_Gender() + "";
+		if (!s.equals("")) {
+			if (s.equals("false")) { // 남자면
+				buttonMale.setBackgroundResource(R.drawable.button_border_after);
+				buttonMale.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.mint));
+			} else {  // 여자면
+				buttonFemale.setBackgroundResource(R.drawable.button_border_after);
+				buttonFemale.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.mint));
+			}
+		}
+		s = LoggedInUser.getLoggedinUser().getSearch_Age() + "";
+		if (!s.equals(""))
+			editTextAge.setText(s);
 	}
 
 	private void addCompany(final boolean first) {
@@ -136,27 +151,43 @@ public class EditRankingsActivity extends AppCompatActivity
 		popupCompany.setFocusable(true);
 		popupCompany.update();
 
-//        EditText editTextSearchComp = (EditText) viewCompany.findViewById(R.id.comp_name);
-//        String inputCompany = editTextSearchComp.getText().toString();
-		ArrayList<String> arrayListCompanies = new ArrayList<>();
-		Button buttonSearchComp = (Button) viewCompany.findViewById(R.id.button_search_comp);
-		buttonSearchComp.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-//                inputCompany 값을 대학디비에서 찾는다
-//                찾은 결과들은 arrayListCompanies에 저장
-			}
-		});
-		// 일단 테스트를 위해 Apple로 지정
-		arrayListCompanies.add("Apple");
-		ListView listView = (ListView) viewCompany.findViewById(R.id.list_company);
-		ArrayAdapter<String> adapterCompany = new ArrayAdapter<>(this,
+		final ListView listView = (ListView) viewCompany.findViewById(R.id.list_company);
+		final ArrayAdapter<String> adapterCompany = new ArrayAdapter<>(this,
 				android.R.layout.simple_list_item_single_choice);
 		listView.setAdapter(adapterCompany);
-		for (int i = 0; i < arrayListCompanies.size(); i++) {
-			adapterCompany.add(arrayListCompanies.get(i));
-		}
 		listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
+		final EditText editTextSearchComp = (EditText) viewCompany.findViewById(R.id.comp_name);
+		Button buttonSearchComp = (Button) viewCompany.findViewById(R.id.button_search_comp);
+		buttonSearchComp.setOnClickListener(new View.OnClickListener() {
+			@TargetApi(Build.VERSION_CODES.KITKAT)
+			@Override
+			public void onClick(View v) {
+				String inputComp = editTextSearchComp.getText().toString();
+				Log.d("inputComp", inputComp);
+				if (Objects.equals(inputComp, ""))
+					inputComp = "!";
+				arrayListCompanies.clear();
+				adapterCompany.clear();
+				RequestMsgSender companySearchMsgSender =
+						(RequestMsgSender) new RequestMsgSender().execute("15;" + inputComp + ";");
+				String compSearchResult = null;
+				try {
+					compSearchResult = companySearchMsgSender.get();
+					Log.d("Reply MSG", compSearchResult);
+				} catch (InterruptedException | ExecutionException e) {
+					e.printStackTrace();
+				}
+				assert compSearchResult != null;
+				String[] tokens = compSearchResult.split(";");
+				Collections.addAll(arrayListCompanies, tokens);
+				adapterCompany.notifyDataSetChanged();
+				for (int i = 0; i < arrayListCompanies.size(); i++) {
+					adapterCompany.add(arrayListCompanies.get(i));
+				}
+				listView.invalidateViews();
+			}
+		});
 
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
@@ -170,9 +201,9 @@ public class EditRankingsActivity extends AppCompatActivity
 			@Override
 			public void onClick(View v) {
 				if (first)
-					tvSelectedComp.setText(selectedCompany);
-//				else
-//					tvSelectedCompExp.setText(selectedCompany);
+					tvCompSearch.setText(selectedCompany);
+				else
+					tvCompSearch.setText(selectedCompany);
 				selectedCompany = "";
 				popupCompany.dismiss();
 			}
@@ -198,32 +229,50 @@ public class EditRankingsActivity extends AppCompatActivity
 						.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				View layoutUni = inflaterUni.inflate(R.layout.activity_popup_university,
 						(ViewGroup) findViewById(R.id.popup_element));
-				popupWindowUni = new PopupWindow(layoutUni, screenWidth / 4 * 3, screenHeight / 4 * 3);
-				popupWindowUni.showAtLocation(layoutUni, Gravity.CENTER, 0, 0);
-				popupWindowUni.setFocusable(true);
-				popupWindowUni.update();
+				popupUniversity = new PopupWindow(layoutUni, screenWidth / 4 * 3, screenHeight / 4 * 3);
+				popupUniversity.showAtLocation(layoutUni, Gravity.CENTER, 0, 0);
+				popupUniversity.setFocusable(true);
+				popupUniversity.update();
 
-//                EditText editTextSearchUni = (EditText) layoutUni.findViewById(R.id.uni_name);
-//                String inputUni = editTextSearchUni.getText().toString();
-				ArrayList<String> arrayListUni = new ArrayList<>();
-				Button buttonSearchUni = (Button) layoutUni.findViewById(R.id.button_search_uni);
-				buttonSearchUni.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						// inputUni 값을 대학디비에서 찾는다
-						// 찾은 결과들은 arrayListUni에 저장
-					}
-				});
-				// 일단 테스트를 위해 중앙대학교로 지정
-				arrayListUni.add("중앙대학교");
 				final ListView listViewUni = (ListView) layoutUni.findViewById(R.id.list_uni);
 				final ArrayAdapter<String> adapterUni = new ArrayAdapter<>(this,
 						android.R.layout.simple_list_item_single_choice);
 				listViewUni.setAdapter(adapterUni);
-				for (int i = 0; i < arrayListUni.size(); i++) {
-					adapterUni.add(arrayListUni.get(i));
-				}
 				listViewUni.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
+				final EditText editTextSearchUni = (EditText) layoutUni.findViewById(R.id.uni_name);
+				Button buttonSearchUni = (Button) layoutUni.findViewById(R.id.button_search_uni);
+				buttonSearchUni.setOnClickListener(new View.OnClickListener() {
+					@TargetApi(Build.VERSION_CODES.KITKAT)
+					@Override
+					public void onClick(View v) {
+						String inputUni = editTextSearchUni.getText().toString();
+						Log.d("inputUni", inputUni);
+						if (Objects.equals(inputUni, ""))
+							inputUni = "!";
+						arrayListUni.clear();
+						adapterUni.clear();
+						// inputUni 값을 대학디비에서 찾는다
+						RequestMsgSender uniSearchMsgSender =
+								(RequestMsgSender) new RequestMsgSender().execute("11;" + inputUni + ";");
+						String uniSearchResult = null;
+						try {
+							uniSearchResult = uniSearchMsgSender.get();
+							Log.d("Reply MSG", uniSearchResult);
+						} catch (InterruptedException | ExecutionException e) {
+							e.printStackTrace();
+						}
+						// 찾은 결과들은 arrayListUni에 저장
+						assert uniSearchResult != null;
+						String[] tokens = uniSearchResult.split(";");
+						Collections.addAll(arrayListUni, tokens);
+						adapterUni.notifyDataSetChanged();
+						for (int i = 0; i < arrayListUni.size(); i++) {
+							adapterUni.add(arrayListUni.get(i));
+						}
+						listViewUni.invalidateViews();
+					}
+				});
 
 				listViewUni.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 					@Override
@@ -237,14 +286,14 @@ public class EditRankingsActivity extends AppCompatActivity
 					@Override
 					public void onClick(View v) {
 						textViewUniSearch.setText(selectedUni);
-						popupWindowUni.dismiss();
+						popupUniversity.dismiss();
 					}
 				});
 				Button buttonCloseUniPopup = (Button) layoutUni.findViewById(R.id.button_cancel_uni);
 				buttonCloseUniPopup.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						popupWindowUni.dismiss();
+						popupUniversity.dismiss();
 					}
 				});
 				break;
@@ -276,15 +325,44 @@ public class EditRankingsActivity extends AppCompatActivity
 					isMaleClicked = false;
 				}
 				break;
-			case R.id.text_birthday:
-				showDatePickerDialog();
-				break;
 			case R.id.button_edit_rankings_save:
-				// save info on DB
-				// if DB save success
+				LoggedInUser.getLoggedinUser().setSearch_com_type(spinnerCompType.getSelectedItem().toString());
+				LoggedInUser.getLoggedinUser().setSearch_duty(spinnerCompDuty.getSelectedItem().toString());
+				LoggedInUser.getLoggedinUser().setSearch_com_name(tvCompSearch.getText().toString());
+				boolean gender = false;
+				if (isFemaleClicked)
+					gender = true;
+				if (isMaleClicked)
+					gender = false;
+				LoggedInUser.getLoggedinUser().setSearch_gender(gender);
+				LoggedInUser.getLoggedinUser().setSearch_age(Integer.parseInt(editTextAge.getText().toString()));
+
+				String infoUpdateMsg = "6;" + LoggedInUser.getLoggedinUser().getSearch_Major() + ";"
+						+ LoggedInUser.getLoggedinUser().getSearch_Com_type() + ";"
+						+ LoggedInUser.getLoggedinUser().getSearch_Duty() + ";"
+						+ LoggedInUser.getLoggedinUser().getSearch_Com_name() + ";"
+						+ LoggedInUser.getLoggedinUser().getSearch_Gender() + ";"
+						+ LoggedInUser.getLoggedinUser().getSearch_Age() + ";"
+						+ LoggedInUser.getLoggedinUser().getSearch_Univ() + ";";
+				Log.d("infoUpdateMsg", infoUpdateMsg);
+
+				while (infoUpdateMsg.contains(";;") || infoUpdateMsg.contains(";null") || infoUpdateMsg.contains("-선택-")) {
+					infoUpdateMsg = infoUpdateMsg.replace(";;", ";!;");
+					infoUpdateMsg = infoUpdateMsg.replace(";null", ";!");
+					infoUpdateMsg = infoUpdateMsg.replace("-선택-", "!");
+				}
+				Log.d("infoUpdateMsg", infoUpdateMsg);
+
+				RequestMsgSender updateMsgSender = (RequestMsgSender) new RequestMsgSender().execute(infoUpdateMsg);
+				String updateResult;
+				try {
+					updateResult = updateMsgSender.get();
+					Log.d("updateResult", updateResult);
+				} catch (InterruptedException | ExecutionException e) {
+					e.printStackTrace();
+				}
+
 				Toast.makeText(this, "저장 완료", Toast.LENGTH_SHORT).show();
-				// if DB save failure
-				// Toast.makeText(this, "저장 실패", Toast.LENGTH_SHORT.show());
 				onBackPressed();
 				break;
 		}
