@@ -616,9 +616,6 @@ public class ExtraInfoActivity extends AppCompatActivity
 				addFirstCertificate();
 				break;
 			case R.id.button_skip:
-
-				// 디비에 null로 저장
-
 				Intent intentHome = new Intent(this, HomeActivity.class);
 				startActivity(intentHome);
 				this.overridePendingTransition(R.anim.animation_enter_right2left,

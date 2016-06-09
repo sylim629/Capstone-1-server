@@ -1,12 +1,11 @@
 package com.example.leanne.capstonedesign_1_;
+
 import android.util.Log;
 
 import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -17,38 +16,34 @@ import java.net.UnknownHostException;
 public class SocketConnector implements Runnable {
 
 	private String receiverHost;
-	private InetAddress receiverIP;
 	private int receiverPort;
 
-	private DataInputStream inFromServer;
 	private DataOutputStream outToServer;
 	private Socket senderSocket;
 	private BufferedReader br;
 
 	private String replyMsg;
 
-    public SocketConnector() {
-        receiverPort = 7773;
-        receiverHost = "192.168.1.101";
-    }
-    public void run() {
-        try {
-            receiverIP = InetAddress.getByName(receiverHost);
-            Log.d("IP: " , receiverHost);
+	public SocketConnector() {
+		receiverPort = 7779;
+		receiverHost = "192.168.0.8";
+	}
 
-        } catch (UnknownHostException uhe) {
-            Log.d("unknown host: " , receiverHost);
-            return;
-        }
-        // connect a socket to the receiver
-        try {
-            senderSocket = new Socket(receiverHost, receiverPort);
-        } catch (ConnectException e) {
-            // exit (or wait until the receiver is ready)
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+	public void run() {
+		try {
+			InetAddress receiverIP = InetAddress.getByName(receiverHost);
+			Log.d("IP: ", receiverHost);
+			Log.d("IP: ", receiverIP.toString());
+		} catch (UnknownHostException uhe) {
+			Log.d("unknown host: ", receiverHost);
+			return;
+		}
+		// connect a socket to the receiver
+		try {
+			senderSocket = new Socket(receiverHost, receiverPort);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 
 		try {
