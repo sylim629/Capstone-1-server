@@ -168,9 +168,11 @@ public class EditMyInfoActivity extends AppCompatActivity
 			textViewUniSearch.setText(LoggedInUser.getLoggedinUser().getUniv());
 		// set major spinner
 		getStr = LoggedInUser.getLoggedinUser().getMajor();
-		Log.d("getMajor", getStr);
-		if (!getStr.equals(""))
-			spinnerMajor.setSelection(adapterMajor.getPosition(getStr));
+		int position = adapterMajor.getPosition(getStr);
+		if (!getStr.equals("")) {
+			spinnerMajor.setSelection(position);
+		}
+
 		// set gpa
 		getStr = LoggedInUser.getLoggedinUser().getGPA() + "";
 		if (!getStr.equals(""))
