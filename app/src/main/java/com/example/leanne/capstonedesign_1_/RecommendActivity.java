@@ -143,10 +143,13 @@ public class RecommendActivity extends Activity {
 		if(input.equals("")) {
 			result = "없음";
 		}else{
-			input = input.substring(1, input.length()-1);
-			String[] tokens = input.split(":",0);
-			for(int j = 0 ; j < tokens.length ; j++ ){
-				result += (tokens[j] + " ");
+			input = input.replace("|","");
+			//input = input.substring(1, input.length()-1);
+			if(!input.equals("")){
+				String[] tokens = input.split(":",0);
+				for(int j = 0 ; j < tokens.length ; j++ ){
+					result += (tokens[j] + " ");
+				}
 			}
 		}
 		return result;
