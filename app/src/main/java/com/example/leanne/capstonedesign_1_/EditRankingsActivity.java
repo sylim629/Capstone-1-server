@@ -123,7 +123,7 @@ public class EditRankingsActivity extends AppCompatActivity implements View.OnCl
 		s = LoggedInUser.getLoggedinUser().getSearch_Duty();
 		if (!s.equals(""))
 			spinnerCompDuty.setSelection(adapterCompDuty.getPosition(s));
-		s = LoggedInUser.getLoggedinUser().getSearch_Com_type();
+		s = LoggedInUser.getLoggedinUser().getSearch_Com_name();
 		if (!s.equals(""))
 			tvCompSearch.setText(s);
 		s = LoggedInUser.getLoggedinUser().getSearch_Gender() + "";

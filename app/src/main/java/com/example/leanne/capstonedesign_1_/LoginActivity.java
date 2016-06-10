@@ -27,8 +27,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         setContentView(R.layout.activity_login);
 
         initView();
-        editTextID.setText("01kxruv3");
-        editTextPW.setText("peobayjnbe");
+        editTextID.setText("zzzzz");
+        editTextPW.setText("zzz");
     }
 
     private void initView() {

@@ -211,7 +211,13 @@ public class EditMyInfoActivity extends AppCompatActivity implements View.OnClic
 		// set certifications
 		getStr = LoggedInUser.getLoggedinUser().getCertifi();
 		if (!getStr.equals("") && !getStr.equals("|")) {
-			textViewAddCert.setText(getStr.substring(1, getStr.length()-1));
+			String tempSetCert = "";
+			String[] token = getStr.split("\\|");
+			for( int i = 0 ; i < token.length ; i++ ){
+				if(!token[i].equals("")) tempSetCert += token[i]+",";
+			}
+			Log.d("logCert",tempSetCert);
+			textViewAddCert.setText(tempSetCert.substring(0, tempSetCert.length()-1));
 		}
 	}
 
@@ -658,11 +664,17 @@ public class EditMyInfoActivity extends AppCompatActivity implements View.OnClic
 			case R.id.button_my_info_save:
 				/////// saved change info in LoggedInUser //////
 				LoggedInUser.getLoggedinUser().setUniv(textViewUniSearch.getText().toString());
-				LoggedInUser.getLoggedinUser().setMajor(spinnerMajor.getSelectedItem().toString());
+				if(!spinnerMajor.getSelectedItem().toString().equals("-선택-")) {
+					LoggedInUser.getLoggedinUser().setMajor(spinnerMajor.getSelectedItem().toString());
+				}
 				LoggedInUser.getLoggedinUser().setGPA(Double.parseDouble(inputGPA.getText().toString()));
 				LoggedInUser.getLoggedinUser().setMaxGPA(Double.parseDouble(spinnerGPA.getSelectedItem().toString()));
-				LoggedInUser.getLoggedinUser().setCom_type(spinnerCompType.getSelectedItem().toString());
-				LoggedInUser.getLoggedinUser().setDuty(spinnerCompDuty.getSelectedItem().toString());
+				if(!spinnerCompType.getSelectedItem().toString().equals("-선택-")){
+					LoggedInUser.getLoggedinUser().setCom_type(spinnerCompType.getSelectedItem().toString());
+				}
+				if(!spinnerCompDuty.getSelectedItem().toString().equals("-선택-")) {
+					LoggedInUser.getLoggedinUser().setDuty(spinnerCompDuty.getSelectedItem().toString());
+				}
 				LoggedInUser.getLoggedinUser().setCom_name(tvSelectedComp.getText().toString());
 				boolean gender = false;
 				if (isFemaleClicked)
