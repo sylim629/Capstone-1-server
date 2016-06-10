@@ -111,17 +111,17 @@ public class RecommendActivity extends Activity {
 			String str_gpaInfo = new String("학점: ");
 			String str_careerInfo = new String("경력: ");
 			idInfo[j] = str_idInfo += cutTokens[i];
-			majorInfo[j] = str_majorInfo += cutTokens[i + 3];
-			dutyInfo[j] = str_dutyInfo += cutTokens[i + 5];
-			toeicInfo[j] = str_toeicInfo += cutTokens[i + 1];
-			certifiInfo[j] = str_certifiInfo + tmp;
-			ageInfo[j] = str_ageInfo += cutTokens[i + 2];
-			wishCompTypeInfo[j] = str_wishCompTypeInfo += cutTokens[i + 4];
-			wishCompInfo[j] = str_wishCompInfo += cutTokens[i + 6];
-			genderInfo[j] = str_genderInfo += cutTokens[i + 7];
-			uniInfo[j] = str_uniInfo += cutTokens[i + 8];
-			empInfo[j] = str_empInfo += cutTokens[i + 10];
-			gpaInfo[j] = str_gpaInfo += (cutTokens[i + 11] + "/" + cutTokens[i + 12]);
+			majorInfo[j] = str_majorInfo += modifyNullString(cutTokens[i + 3]);
+			dutyInfo[j] = str_dutyInfo += modifyNullString(cutTokens[i + 5]);
+			toeicInfo[j] = str_toeicInfo += modifyNullString(cutTokens[i + 1]);
+			certifiInfo[j] = str_certifiInfo + modifyNullString(tmp);
+			ageInfo[j] = str_ageInfo += modifyNullString(cutTokens[i + 2]);
+			wishCompTypeInfo[j] = str_wishCompTypeInfo += modifyNullString(cutTokens[i + 4]);
+			wishCompInfo[j] = str_wishCompInfo += modifyNullString(cutTokens[i + 6]);
+			genderInfo[j] = str_genderInfo += modifyNullString(cutTokens[i + 7]);
+			uniInfo[j] = str_uniInfo += modifyNullString(cutTokens[i + 8]);
+			empInfo[j] = str_empInfo += modifyNullString(cutTokens[i + 10]);
+			gpaInfo[j] = str_gpaInfo += (modifyNullString(cutTokens[i + 11]) + "/" + modifyNullString(cutTokens[i + 12]));
 			careerInfo[j] = str_careerInfo += alterCareer(cutTokens[i + 13]);
 		}
 
@@ -130,9 +130,19 @@ public class RecommendActivity extends Activity {
 		initView();
 	}
 
+	public String modifyNullString(String input) {
+		String output = input.trim();
+		if(output.equals("null")) {
+			output = "없음";
+		}
+		return output;
+	}
+
 	public String alterCareer(String input){
 		String result = "";
-		if( input != null ){
+		if(input.equals("")) {
+			result = "없음";
+		}else{
 			input = input.substring(1, input.length()-1);
 			String[] tokens = input.split(":",0);
 			for(int j = 0 ; j < tokens.length ; j++ ){
