@@ -100,9 +100,12 @@ public class TabFragment_Favs extends ListFragment {
 			ageInfo += tokens[i + 2];
 			wishCompTypeInfo += tokens[i + 4];
 			wishCompInfo += tokens[i + 6];
-			genderInfo += tokens[i + 7];
-			uniInfo += tokens[i + 8];
-			empInfo += tokens[i + 10];
+			if(tokens[i+7].equals("true")) genderInfo += "여";
+			else genderInfo += "남";
+			//genderInfo += tokens[i+7];
+			uniInfo += tokens[i+8];
+			empInfo += "취업준비중";
+			//empInfo += tokens[i+10];
 			gpaInfo += (tokens[i + 11] + "/" + tokens[i + 12]);
 			careerInfo += alterCareer(tokens[i + 13]);
 
@@ -124,12 +127,15 @@ public class TabFragment_Favs extends ListFragment {
 	public String alterCareer(String input) {
 		String result = "";
 		if (input != null) {
-			input = input.substring(1, input.length() - 1);
-			String[] tokens = input.split(":", 0);
-			for (String token : tokens) {
-				result += (token + " ");
+			input = input.replace("|","");
+			if(!input.equals("")) {
+				String[] tokens = input.split(":", 0);
+				for (String token : tokens) {
+					result += (token + " ");
+				}
 			}
 		}
+		result+="개월";
 		return result;
 	}
 
