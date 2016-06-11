@@ -28,8 +28,8 @@ public class SocketConnector implements Runnable {
 	private String replyMsg;
 
     public SocketConnector() {
-        receiverPort = 7779;
-        receiverHost = "192.168.0.7";
+        receiverPort = 7773;
+        receiverHost = "192.168.15.11";
     }
     public void run() {
         try {
