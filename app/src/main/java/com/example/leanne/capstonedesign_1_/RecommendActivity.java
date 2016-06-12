@@ -113,9 +113,15 @@ public class RecommendActivity extends Activity {
 			idInfo[j] = str_idInfo += cutTokens[i];
 			majorInfo[j] = str_majorInfo += modifyNullString(cutTokens[i + 3]);
 			dutyInfo[j] = str_dutyInfo += modifyNullString(cutTokens[i + 5]);
-			toeicInfo[j] = str_toeicInfo += modifyNullString(cutTokens[i + 1]);
+
+			str_toeicInfo += modifyNullString(cutTokens[i + 1]);
+			if(str_toeicInfo.equals("0"))	toeicInfo[j] = "없음";
+
 			certifiInfo[j] = str_certifiInfo + modifyNullString(tmp);
-			ageInfo[j] = str_ageInfo += modifyNullString(cutTokens[i + 2]);
+
+			str_ageInfo += modifyNullString(cutTokens[i + 2]);
+			if(str_ageInfo.equals("0")) ageInfo[j] = "없음";
+
 			wishCompTypeInfo[j] = str_wishCompTypeInfo += modifyNullString(cutTokens[i + 4]);
 			wishCompInfo[j] = str_wishCompInfo += modifyNullString(cutTokens[i + 6]);
 			genderInfo[j] = str_genderInfo += modifyNullString(cutTokens[i + 7]);
