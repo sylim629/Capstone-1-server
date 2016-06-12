@@ -95,9 +95,11 @@ public class TabFragment_Favs extends ListFragment {
 			majorInfo += tokens[i + 3];
 			dutyInfo += tokens[i + 5];
 			certifiInfo += tokens[i + 9];
-			toeicInfo += tokens[i + 1];
-			certifiInfo = certifiInfo.replace("|", ",");
-			ageInfo += tokens[i + 2];
+			if(!tokens[i+1].equals("0")) toeicInfo += tokens[i+1];
+			else toeicInfo += "없음";
+			certifiInfo = certifiInfo.replace("|",",");
+			if(!tokens[i+2].equals("0")) ageInfo += tokens[i+2];
+			else ageInfo += "없음";
 			wishCompTypeInfo += tokens[i + 4];
 			wishCompInfo += tokens[i + 6];
 			if(tokens[i+7].equals("true")) genderInfo += "여";
