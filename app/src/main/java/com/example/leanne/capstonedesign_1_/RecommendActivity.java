@@ -115,8 +115,8 @@ public class RecommendActivity extends Activity {
 			dutyInfo[j] = str_dutyInfo += modifyNullString(cutTokens[i + 5]);
 
 			if(cutTokens[i+1].equals("0"))
-				str_toeicInfo = str_toeicInfo + "없음";			/////////////////////////////////////////
-			toeicInfo[j] = str_toeicInfo;
+				toeicInfo[j] = str_toeicInfo + "없음";			/////////////////////////////////////////
+			toeicInfo[j] = str_toeicInfo += cutTokens[i+1];
 
 			certifiInfo[j] = str_certifiInfo + modifyNullString(tmp);
 

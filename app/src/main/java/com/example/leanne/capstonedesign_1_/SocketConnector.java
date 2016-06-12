@@ -29,7 +29,7 @@ public class SocketConnector implements Runnable {
 
     public SocketConnector() {
         receiverPort = 7772;
-        receiverHost = "27.35.13.13";
+        receiverHost = "119.67.245.149";
     }
     public void run() {
         try {

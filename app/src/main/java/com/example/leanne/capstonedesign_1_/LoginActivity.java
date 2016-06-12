@@ -27,8 +27,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         setContentView(R.layout.activity_login);
 
         initView();
-        editTextID.setText("zzzzz");
-        editTextPW.setText("zzz");
+        //editTextID.setText("zzzzz");
+        //editTextPW.setText("zzz");
     }
 
     private void initView() {
@@ -107,7 +107,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
                     LoggedInUser.getLoggedinUser().setFav_ids(tokens[24]);
 
-                    Toast.makeText(this, "로그인 성공!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "로그인", Toast.LENGTH_SHORT).show();
                     Intent intentHome = new Intent(this, HomeActivity.class);
                     startActivity(intentHome);
                     this.overridePendingTransition(R.anim.animation_enter_right2left,
