@@ -33,10 +33,8 @@ public class TabFragment_MyPage extends Fragment implements View.OnClickListener
         Button editRankingSettings = (Button) v.findViewById(R.id.button_edit_rankings);
         Button seeAcceptRate = (Button) v.findViewById(R.id.accept_rate_btn);
         Button seeRec = (Button) v.findViewById(R.id.recommend_btn);
-        ImageButton settings = (ImageButton) v.findViewById(R.id.button_settings);
         editMyInfo.setOnClickListener(this);
         editRankingSettings.setOnClickListener(this);
-        settings.setOnClickListener(this);
         seeAcceptRate.setOnClickListener(this);
         seeRec.setOnClickListener(this);
 
@@ -76,13 +74,6 @@ public class TabFragment_MyPage extends Fragment implements View.OnClickListener
             case R.id.button_edit_rankings:
                 Intent goEditRankings = new Intent(getActivity(), EditRankingsActivity.class);
                 startActivity(goEditRankings);
-                getActivity().overridePendingTransition(
-                        R.anim.animation_enter_right2left,
-                        R.anim.animation_leave_right2left);
-                break;
-            case R.id.button_settings:
-                Intent goSettings = new Intent(getActivity(), SettingsActivity.class);
-                startActivity(goSettings);
                 getActivity().overridePendingTransition(
                         R.anim.animation_enter_right2left,
                         R.anim.animation_leave_right2left);
