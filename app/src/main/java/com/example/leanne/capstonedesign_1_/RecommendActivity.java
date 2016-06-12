@@ -86,13 +86,13 @@ public class RecommendActivity extends Activity {
 
 		int j = 0;
 		for(int i = 0 ; j < 3 ; i+=14, j++ ) {
-			////////////
+			//kwjel88;885;29;컴퓨터공학부;company_type1;웹기획∙웹마케팅∙PM;company_name1;gender1;univ1;정보처리기사;isEmp;3.9;4.5;|인턴:기관1:1개월|;
 			String cert = cutTokens[i+9];
 			String[] cert_tokens = cert.split("\\|");
 			String tmp="";
 			for(int l=0; l<cert_tokens.length; l++){
 				if(!cert_tokens[l].equals("")){
-					tmp = tmp + cert_tokens[l] + " | ";
+					tmp = tmp + cert_tokens[l] + " , ";
 				}
 			}
 			tmp = tmp.substring(0, tmp.length()-2);
@@ -114,8 +114,9 @@ public class RecommendActivity extends Activity {
 			majorInfo[j] = str_majorInfo += modifyNullString(cutTokens[i + 3]);
 			dutyInfo[j] = str_dutyInfo += modifyNullString(cutTokens[i + 5]);
 
-			str_toeicInfo += modifyNullString(cutTokens[i + 1]);
-			if(str_toeicInfo.equals("0"))	toeicInfo[j] = "없음";
+			if(cutTokens[i+1].equals("0"))
+				str_toeicInfo = str_toeicInfo + "없음";			/////////////////////////////////////////
+			toeicInfo[j] = str_toeicInfo;
 
 			certifiInfo[j] = str_certifiInfo + modifyNullString(tmp);
 
@@ -138,7 +139,7 @@ public class RecommendActivity extends Activity {
 
 	public String modifyNullString(String input) {
 		String output = input.trim();
-		if(output.equals("null")) {
+		if(output.equals("null") || output.equals(0)) {
 			output = "없음";
 		}
 		return output;

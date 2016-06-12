@@ -81,18 +81,9 @@
                 android:layout_centerVertical="true"
                 android:padding="10dp">
                 <TextView
-                    android:id="@+id/rec_ranking_num1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
-                    android:textAppearance="@android:style/TextAppearance.Medium"
-                    android:text="#"/>
-                <TextView
                     android:id="@+id/rec_rankings_id1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/rec_ranking_num1"
-                    android:layout_marginLeft="10dp"
                     android:textColor="@android:color/white"
                     android:textAppearance="@android:style/TextAppearance.Medium"
                     android:text="id"/>
@@ -102,13 +93,6 @@
                     android:layout_toLeftOf="@+id/rec_rankings_major1"
                     android:textColor="@android:color/white"
                     android:text="전공: "/>
-                <ImageButton
-                    android:id="@+id/rec_heart_white1"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:background="@drawable/heart_white"/>
                 <TextView
                     android:id="@+id/rec_rankings_major1"
                     android:layout_below="@id/rec_rankings_id1"
@@ -168,18 +152,9 @@
                 android:layout_centerVertical="true"
                 android:padding="10dp">
                 <TextView
-                    android:id="@+id/rec_ranking_num2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
-                    android:textAppearance="@android:style/TextAppearance.Medium"
-                    android:text="#"/>
-                <TextView
                     android:id="@+id/rec_rankings_id2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/rec_ranking_num2"
-                    android:layout_marginLeft="10dp"
                     android:textColor="@android:color/white"
                     android:textAppearance="@android:style/TextAppearance.Medium"
                     android:text="id"/>
@@ -189,13 +164,6 @@
                     android:layout_toLeftOf="@+id/rec_rankings_major2"
                     android:textColor="@android:color/white"
                     android:text="전공: "/>
-                <ImageButton
-                    android:id="@+id/rec_heart_white2"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:background="@drawable/heart_white"/>
                 <TextView
                     android:id="@+id/rec_rankings_major2"
                     android:layout_below="@id/rec_rankings_id2"
@@ -255,18 +223,9 @@
                 android:layout_centerVertical="true"
                 android:padding="10dp">
                 <TextView
-                    android:id="@+id/rec_ranking_num3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
-                    android:textAppearance="@android:style/TextAppearance.Medium"
-                    android:text="#"/>
-                <TextView
                     android:id="@+id/rec_rankings_id3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/rec_ranking_num3"
-                    android:layout_marginLeft="10dp"
                     android:textColor="@android:color/white"
                     android:textAppearance="@android:style/TextAppearance.Medium"
                     android:text="id"/>
@@ -276,13 +235,6 @@
                     android:layout_toLeftOf="@+id/rec_rankings_major3"
                     android:textColor="@android:color/white"
                     android:text="전공: "/>
-                <ImageButton
-                    android:id="@+id/rec_heart_white3"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:background="@drawable/heart_white"/>
                 <TextView
                     android:id="@+id/rec_rankings_major3"
                     android:layout_below="@id/rec_rankings_id3"
